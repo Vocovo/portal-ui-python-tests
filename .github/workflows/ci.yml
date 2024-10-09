@@ -41,4 +41,4 @@ jobs:
 
     - name: Run only smoke tests with pytest
       run: |
-        xvfb-run -a pipenv run pytest -m "smoke"
+        xvfb-run -a pipenv run pytest -m "smoke" -v
