@@ -1,0 +1,44 @@
+name: CI for Python Selenium Smoke Tests
+
+on:
+  push:
+    branches:
+      - "*"  # Run the pipeline on all branches
+  pull_request:
+    branches:
+      - "*"  # Run the pipeline on all pull requests
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    env:
+      HEADLESS: true
+      BASE_URL: https://portal.dev.uksouth.vocovo.com/
+      PROD_BASE_URL: https://portal.vocovo.com/
+      USERNAME_FALSE: forgot_pass_user4082@vocovo.com
+      ADMIN_USERNAME: qa-testing@vocovo.com
+      ADMIN_PASSWORD: vocovoT3st!ng@utomation
+      TESTRAIL_URL: https://vocovo.testrail.io/
+      TESTRAIL_USER: development@vocovo.com
+      TESTRAIL_PASSWORD: RZ83kNmRU/8aTqxuudlY-s6yw5kJcc5nJpXr.Fmv6
+      TESTRAIL_PROJECT_ID: 34
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Set up Python 3.12
+      uses: actions/setup-python@v4
+      with:
+        python-version: 3.12
+
+    - name: Install dependencies
+      run: |
+        pip install --upgrade pip
+        pip install pipenv
+        pipenv install --dev
+
+    - name: Run only smoke tests with pytest
+      run: |
+        xvfb-run -a pipenv run pytest -m "smoke"
