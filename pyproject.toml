@@ -1,0 +1,26 @@
+[tool.black]
+line-length = 120
+include = '\.pyi?$'
+#[build-system]
+
+[project]
+name = "gcuitest"
+version = '0.0.1'
+dependencies = [
+ "chromedriver-py",
+"pytest",
+"requests",
+"result",
+"selenium",
+]
+requires-python = ">=3.12"
+authors = [
+  {name = "Eugen Paris", email = "eugen.paris23@gmail.com"},
+]
+description = "UI Automation Tests"
+readme = "README.md"
+
+classifiers = [
+#  "Development Status :: 4 - Beta",
+#  "Programming Language :: Python"
+]
