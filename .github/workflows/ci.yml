@@ -1,4 +1,4 @@
-name: CI for Python Selenium Smoke Tests
+name: CI for Python Selenium Tests
 
 on:
   push:
@@ -39,6 +39,6 @@ jobs:
         pip install pipenv
         pipenv install --dev
 
-    - name: Run only smoke tests with pytest
+    - name: Run smoke tests with verbosity
       run: |
         xvfb-run -a pipenv run pytest -m "smoke" -v
