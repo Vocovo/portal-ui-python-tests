@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      HEADLESS: true
+      HEADLESS: false
       BASE_URL: https://portal.dev.uksouth.vocovo.com/
       PROD_BASE_URL: https://portal.vocovo.com/
       USERNAME_FALSE: forgot_pass_user4082@vocovo.com
