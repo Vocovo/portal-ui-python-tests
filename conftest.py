@@ -14,7 +14,7 @@ load_dotenv()
 
 @pytest.fixture
 def driver():
-    is_headless = os.getenv("HEADLESS") == "True"
+    is_headless = os.getenv("HEADLESS", "False").lower() == "false"
     chrome_options = Options()
 
     # Set headless mode if needed
