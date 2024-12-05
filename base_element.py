@@ -16,7 +16,7 @@ class BaseElement:
         self.find()
 
     def find(self):
-        element = WebDriverWait(self.driver, 10).until(EC.visibility_of_element_located(locator=self.locator))
+        element = WebDriverWait(self.driver, 20).until(EC.visibility_of_element_located(locator=self.locator))
         self.web_element = element
         return None
 
@@ -44,18 +44,18 @@ class BaseElement:
     def click(self, retries=3, wait_time=2):
         while retries > 0:
             try:
-                element = WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable(self.locator))
+                element = WebDriverWait(self.driver, 20).until(EC.element_to_be_clickable(self.locator))
                 element.click()
                 return None
             except StaleElementReferenceException:
                 retries -= 1
                 time.sleep(wait_time)
                 # Wait for the element to be present again before retrying
-                WebDriverWait(self.driver, 10).until(EC.presence_of_element_located(self.locator))
+                WebDriverWait(self.driver, 20).until(EC.presence_of_element_located(self.locator))
         raise StaleElementReferenceException("Element not found even after retries.")
 
     def is_selected(self):
-        element = WebDriverWait(self.driver, 10).until(EC.visibility_of_element_located(locator=self.locator))
+        element = WebDriverWait(self.driver, 20).until(EC.visibility_of_element_located(locator=self.locator))
         self.web_element = element
         return element.is_selected()
 
@@ -82,12 +82,12 @@ class BaseElement:
             return self.web_element.text
 
     def is_displayed(self):
-        element = WebDriverWait(self.driver, 10).until(EC.visibility_of_element_located(self.locator))
+        element = WebDriverWait(self.driver, 20).until(EC.visibility_of_element_located(self.locator))
         self.web_element = element
         return element.is_displayed()
 
     def is_enabled(self):
-        element = WebDriverWait(self.driver, 10).until(EC.visibility_of_element_located(self.locator))
+        element = WebDriverWait(self.driver, 20).until(EC.visibility_of_element_located(self.locator))
         self.web_element = element
         return element.is_enabled()
 
