@@ -4,6 +4,7 @@ from locators import (HomePageControllers, HomePageHeadsetsModal, HeadsetsDetail
 from pytest import mark
 from qase_client import QaseClient
 import time
+from selenium.common.exceptions import StaleElementReferenceException, TimeoutException
 
 
 @mark.portaluksmoketests
@@ -20,7 +21,7 @@ def test_filtering_by_group_internal_vocovo(driver_uk_prod_login_admin, run_id):
 
     base_filter_title = homepage.dropdown_button.get_text
 
-    # On the homebage dashboard the filter should be set to "Strongbyte Solutions Ltd"
+    # On the homepage dashboard, the filter should be set to "Strongbyte Solutions Ltd"
     assert base_filter_title == "Strongbyte Solutions Ltd"
 
     default_page_headsets_active_number = hpc.active_devices_count.get_text
@@ -52,7 +53,7 @@ def test_filtering_by_group_internal_vocovo(driver_uk_prod_login_admin, run_id):
             "The filtering label does not match the expected text."
 
         # STEP 5: Verify that the number of active devices changes according to the filters
-        # EXPECTED RESULT: The number should reflect the correct number of active devices according to thne filters
+        # EXPECTED RESULT: The number should reflect the correct number of active devices according to the filters
         vocovo_internal_active_number = hpc.active_devices_count.get_text
         assert default_page_headsets_active_number != vocovo_internal_active_number
 
@@ -65,8 +66,8 @@ def test_filtering_by_group_internal_vocovo(driver_uk_prod_login_admin, run_id):
         qase_client.update_test_result(run_id, case_id, "passed", comment="Test completed successfully",
                                        time=int(elapsed_time))  # Use the elapsed time here
 
-    except AssertionError as e:
-        # If there's an assertion error, capture the failure reason
+    except (AssertionError, StaleElementReferenceException, TimeoutException) as e:
+        # If there's an assertion or Selenium exception, capture the failure reason
         failure_reason = str(e)
         # Record the end time after the test completes (in case of failure)
         end_time = time.time()
@@ -95,7 +96,7 @@ def test_filtering_by_group_internal_vocovo_active_controllers(driver_uk_prod_lo
 
     base_filter_title = homepage.dropdown_button.get_text
 
-    # On the homebage dashboard the filter should be set to "Strongbyte Solutions Ltd"
+    # On the homepage dashboard the filter should be set to "Strongbyte Solutions Ltd"
     assert base_filter_title == "Strongbyte Solutions Ltd"
 
     default_page_headsets_active_number = hpc.active_devices_count.get_text
@@ -127,7 +128,7 @@ def test_filtering_by_group_internal_vocovo_active_controllers(driver_uk_prod_lo
             "The filtering label does not match the expected text."
 
         # STEP 5: Verify that the number of active devices changes according to the filters
-        # EXPECTED RESULT: The number should reflect the correct number of active devices according to thne filters
+        # EXPECTED RESULT: The number should reflect the correct number of active devices according to the filters
         vocovo_internal_active_number = hpc.active_devices_count.get_text
         assert default_page_headsets_active_number != vocovo_internal_active_number
 
@@ -140,8 +141,8 @@ def test_filtering_by_group_internal_vocovo_active_controllers(driver_uk_prod_lo
         qase_client.update_test_result(run_id, case_id, "passed", comment="Test completed successfully",
                                        time=int(elapsed_time))  # Use the elapsed time here
 
-    except AssertionError as e:
-        # If there's an assertion error, capture the failure reason
+    except (AssertionError, StaleElementReferenceException, TimeoutException) as e:
+        # If there's an assertion or Selenium exception, capture the failure reason
         failure_reason = str(e)
         # Record the end time after the test completes (in case of failure)
         end_time = time.time()
@@ -170,7 +171,7 @@ def test_filtering_by_group_internal_vocovo_inactive_controllers(driver_uk_prod_
 
     base_filter_title = homepage.dropdown_button.get_text
 
-    # On the homebage dashboard the filter should be set to "Strongbyte Solutions Ltd"
+    # On the homepage dashboard the filter should be set to "Strongbyte Solutions Ltd"
     assert base_filter_title == "Strongbyte Solutions Ltd"
 
     default_page_headsets_inactive_number = hpc.inactive_devices_count.get_text
@@ -201,8 +202,8 @@ def test_filtering_by_group_internal_vocovo_inactive_controllers(driver_uk_prod_
         assert homepage.vocovo_internal_label_filtering.get_text == "VoCoVo Internal", \
             "The filtering label does not match the expected text."
 
-        # STEP 5: Verify that the number of active devices changes according to the filters
-        # EXPECTED RESULT: The number should reflect the correct number of active devices according to thne filters
+        # STEP 5: Verify that the number of inactive devices changes according to the filters
+        # EXPECTED RESULT: The number should reflect the correct number of inactive devices according to the filters
         vocovo_internal_inactive_number = hpc.inactive_devices_count.get_text
         assert default_page_headsets_inactive_number != vocovo_internal_inactive_number
 
@@ -215,8 +216,8 @@ def test_filtering_by_group_internal_vocovo_inactive_controllers(driver_uk_prod_
         qase_client.update_test_result(run_id, case_id, "passed", comment="Test completed successfully",
                                        time=int(elapsed_time))  # Use the elapsed time here
 
-    except AssertionError as e:
-        # If there's an assertion error, capture the failure reason
+    except (AssertionError, StaleElementReferenceException, TimeoutException) as e:
+        # If there's an assertion or Selenium exception, capture the failure reason
         failure_reason = str(e)
         # Record the end time after the test completes (in case of failure)
         end_time = time.time()
@@ -229,6 +230,7 @@ def test_filtering_by_group_internal_vocovo_inactive_controllers(driver_uk_prod_
 
         # Re-raise the exception to ensure the test is marked as failed
         raise
+
 
 
 @mark.portaluksmoketests
@@ -245,7 +247,7 @@ def test_filtering_by_group_internal_vocovo_inactive_controllers(driver_uk_prod_
 
     base_filter_title = homepage.dropdown_button.get_text
 
-    # On the homebage dashboard the filter should be set to "Strongbyte Solutions Ltd"
+    # On the homepage dashboard, the filter should be set to "Strongbyte Solutions Ltd"
     assert base_filter_title == "Strongbyte Solutions Ltd"
 
     default_page_headsets_fault_number = hpc.fault_devices_title.get_text
@@ -276,8 +278,8 @@ def test_filtering_by_group_internal_vocovo_inactive_controllers(driver_uk_prod_
         assert homepage.vocovo_internal_label_filtering.get_text == "VoCoVo Internal", \
             "The filtering label does not match the expected text."
 
-        # STEP 5: Verify that the number of active devices changes according to the filters
-        # EXPECTED RESULT: The number should reflect the correct number of active devices according to thne filters
+        # STEP 5: Verify that the number of fault devices changes according to the filters
+        # EXPECTED RESULT: The number should reflect the correct number of fault devices according to the filters
         vocovo_internal_fault_number = hpc.fault_devices_count.get_text
         assert default_page_headsets_fault_number != vocovo_internal_fault_number
 
@@ -290,8 +292,8 @@ def test_filtering_by_group_internal_vocovo_inactive_controllers(driver_uk_prod_
         qase_client.update_test_result(run_id, case_id, "passed", comment="Test completed successfully",
                                        time=int(elapsed_time))  # Use the elapsed time here
 
-    except AssertionError as e:
-        # If there's an assertion error, capture the failure reason
+    except (AssertionError, StaleElementReferenceException, TimeoutException) as e:
+        # If there's an assertion or Selenium exception, capture the failure reason
         failure_reason = str(e)
         # Record the end time after the test completes (in case of failure)
         end_time = time.time()
@@ -310,7 +312,7 @@ def test_filtering_by_group_internal_vocovo_inactive_controllers(driver_uk_prod_
 @mark.regression
 @mark.testcaseid("PST-21")
 def test_filtering_by_group_internal_vocovo_unknown_status_controllers(driver_uk_prod_login_admin, run_id):
-    """After filtering by selecting a group the "Unkown status" controllers are being displayed on the dashboard"""
+    """After filtering by selecting a group the "Unknown status" controllers are being displayed on the dashboard"""
 
     homepage = HomePage(driver_uk_prod_login_admin)
     hpc = HomePageControllers(driver_uk_prod_login_admin)
@@ -319,7 +321,7 @@ def test_filtering_by_group_internal_vocovo_unknown_status_controllers(driver_uk
 
     base_filter_title = homepage.dropdown_button.get_text
 
-    # On the homebage dashboard the filter should be set to "Strongbyte Solutions Ltd"
+    # On the homepage dashboard the filter should be set to "Strongbyte Solutions Ltd"
     assert base_filter_title == "Strongbyte Solutions Ltd"
 
     default_page_headsets_unknown_status_number = hpc.unknown_status_devices_count.get_text
@@ -350,8 +352,8 @@ def test_filtering_by_group_internal_vocovo_unknown_status_controllers(driver_uk
         assert homepage.vocovo_internal_label_filtering.get_text == "VoCoVo Internal", \
             "The filtering label does not match the expected text."
 
-        # STEP 5: Verify that the number of active devices changes according to the filters
-        # EXPECTED RESULT: The number should reflect the correct number of active devices according to thne filters
+        # STEP 5: Verify that the number of "Unknown status" devices changes according to the filters
+        # EXPECTED RESULT: The number should reflect the correct number of "Unknown status" devices according to the filters
         vocovo_internal_unknown_number = hpc.unknown_status_devices_count.get_text
         assert default_page_headsets_unknown_status_number != vocovo_internal_unknown_number
 
@@ -364,8 +366,8 @@ def test_filtering_by_group_internal_vocovo_unknown_status_controllers(driver_uk
         qase_client.update_test_result(run_id, case_id, "passed", comment="Test completed successfully",
                                        time=int(elapsed_time))  # Use the elapsed time here
 
-    except AssertionError as e:
-        # If there's an assertion error, capture the failure reason
+    except (AssertionError, StaleElementReferenceException, TimeoutException) as e:
+        # If there's an assertion or Selenium exception, capture the failure reason
         failure_reason = str(e)
         # Record the end time after the test completes (in case of failure)
         end_time = time.time()
@@ -395,7 +397,7 @@ def test_filtering_by_group_internal_vocovo_headset_modal(driver_uk_prod_login_a
 
     base_filter_title = homepage.dropdown_button.get_text
 
-    # On the homebage dashboard the filter should be set to "Strongbyte Solutions Ltd"
+    # On the homepage dashboard the filter should be set to "Strongbyte Solutions Ltd"
     assert base_filter_title == "Strongbyte Solutions Ltd"
 
     # Retrieve the values from the Strongbyte Solutions Ltd Group dashboard -> headsets
@@ -436,8 +438,8 @@ def test_filtering_by_group_internal_vocovo_headset_modal(driver_uk_prod_login_a
         vocovo_internal_page_offline_30_days = hphm.long_offline_count.get_text
         vocovo_internal_page_unknown_headsets = hphm.unknown_count.get_text
 
-        # STEP 5: Verify that the number of active devices changes according to the filters
-        # EXPECTED RESULT: The number should reflect the correct number of active devices according to thne filters
+        # STEP 5: Verify that the number of headsets changes according to the filters
+        # EXPECTED RESULT: The number should reflect the correct number of headsets according to the filters
         assert default_page_online_headsets != vocovo_internal_page_online_headsets
         assert default_page_offline_headsets != vocovo_internal_page_offline_headsets
         assert default_page_offline_30_days != vocovo_internal_page_offline_30_days
@@ -452,8 +454,8 @@ def test_filtering_by_group_internal_vocovo_headset_modal(driver_uk_prod_login_a
         qase_client.update_test_result(run_id, case_id, "passed", comment="Test completed successfully",
                                        time=int(elapsed_time))  # Use the elapsed time here
 
-    except AssertionError as e:
-        # If there's an assertion error, capture the failure reason
+    except (AssertionError, StaleElementReferenceException, TimeoutException) as e:
+        # If there's an assertion or Selenium exception, capture the failure reason
         failure_reason = str(e)
         # Record the end time after the test completes (in case of failure)
         end_time = time.time()
@@ -557,7 +559,7 @@ def test_navigate_to_the_headsets_module_details_page_for_a_group(driver_uk_prod
         qase_client.update_test_result(run_id, case_id, "passed", comment="Test completed successfully",
                                        time=int(elapsed_time))  # Use the elapsed time here
 
-    except AssertionError as e:
+    except (AssertionError, StaleElementReferenceException, TimeoutException) as e:
         # If there's an assertion error, capture the failure reason
         failure_reason = str(e)
         # Record the end time after the test completes (in case of failure)
@@ -644,7 +646,7 @@ def test_filtering_by_group_internal_vocovo_handsets_modal(driver_uk_prod_login_
         qase_client.update_test_result(run_id, case_id, "passed", comment="Test completed successfully",
                                        time=int(elapsed_time))  # Use the elapsed time here
 
-    except AssertionError as e:
+    except (AssertionError, StaleElementReferenceException, TimeoutException) as e:
         # If there's an assertion error, capture the failure reason
         failure_reason = str(e)
         # Record the end time after the test completes (in case of failure)
@@ -757,7 +759,7 @@ def test_navigate_to_the_handsets_module_details_page_for_a_group(driver_uk_prod
         qase_client.update_test_result(run_id, case_id, "passed", comment="Test completed successfully",
                                        time=int(elapsed_time))  # Use the elapsed time here
 
-    except AssertionError as e:
+    except (AssertionError, StaleElementReferenceException, TimeoutException) as e:
         # If there's an assertion error, capture the failure reason
         failure_reason = str(e)
         # Record the end time after the test completes (in case of failure)
@@ -858,7 +860,7 @@ def test_filtering_by_group_internal_vocovo_callpoints_modal(driver_uk_prod_logi
         qase_client.update_test_result(run_id, case_id, "passed", comment="Test completed successfully",
                                        time=int(elapsed_time))  # Use the elapsed time here
 
-    except AssertionError as e:
+    except (AssertionError, StaleElementReferenceException, TimeoutException) as e:
         # If there's an assertion error, capture the failure reason
         failure_reason = str(e)
         # Record the end time after the test completes (in case of failure)
@@ -971,7 +973,7 @@ def test_navigate_to_the_callpoints_module_details_page_for_a_group(driver_uk_pr
         qase_client.update_test_result(run_id, case_id, "passed", comment="Test completed successfully",
                                        time=int(elapsed_time))  # Use the elapsed time here
 
-    except AssertionError as e:
+    except (AssertionError, StaleElementReferenceException, TimeoutException) as e:
         # If there's an assertion error, capture the failure reason
         failure_reason = str(e)
         # Record the end time after the test completes (in case of failure)
@@ -1072,7 +1074,7 @@ def test_filtering_by_group_internal_vocovo_callpoints_modal(driver_uk_prod_logi
         qase_client.update_test_result(run_id, case_id, "passed", comment="Test completed successfully",
                                        time=int(elapsed_time))  # Use the elapsed time here
 
-    except AssertionError as e:
+    except (AssertionError, StaleElementReferenceException, TimeoutException) as e:
         # If there's an assertion error, capture the failure reason
         failure_reason = str(e)
         # Record the end time after the test completes (in case of failure)
@@ -1185,7 +1187,7 @@ def test_navigate_to_the_callpoints_module_details_page_for_a_group(driver_uk_pr
         qase_client.update_test_result(run_id, case_id, "passed", comment="Test completed successfully",
                                        time=int(elapsed_time))  # Use the elapsed time here
 
-    except AssertionError as e:
+    except (AssertionError, StaleElementReferenceException, TimeoutException) as e:
         # If there's an assertion error, capture the failure reason
         failure_reason = str(e)
         # Record the end time after the test completes (in case of failure)

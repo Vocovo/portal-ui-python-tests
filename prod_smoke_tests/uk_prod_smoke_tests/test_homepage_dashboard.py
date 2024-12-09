@@ -4,6 +4,7 @@ from locators import (HomePageControllers, HomePageHeadsetsModal, HeadsetsDetail
 from pytest import mark
 from qase_client import QaseClient
 import time
+from selenium.common.exceptions import StaleElementReferenceException, TimeoutException
 
 
 @mark.portaluksmoketests
@@ -41,7 +42,7 @@ def test_dashboard_active_devices(driver_uk_prod_login_admin, run_id):
         qase_client.update_test_result(run_id, case_id, "passed", comment="Test completed successfully",
                                        time=int(elapsed_time))
 
-    except AssertionError as e:
+    except (AssertionError, StaleElementReferenceException, TimeoutException) as e:
         # If there's an assertion error, capture the failure reason
         failure_reason = str(e)
         # Record the end time after the test completes (in case of failure)
@@ -102,7 +103,7 @@ def test_dashboard_inactive_devices(driver_uk_prod_login_admin, run_id):
         qase_client.update_test_result(run_id, case_id, "passed", comment="Test completed successfully",
                                        time=int(elapsed_time))  # Use the elapsed time here
 
-    except AssertionError as e:
+    except (AssertionError, StaleElementReferenceException, TimeoutException) as e:
         # If there's an assertion error, capture the failure reason
         failure_reason = str(e)
         # Record the end time after the test completes (in case of failure)
@@ -164,7 +165,7 @@ def test_dashboard_fault_devices(driver_uk_prod_login_admin, run_id):
         qase_client.update_test_result(run_id, case_id, "passed", comment="Test completed successfully",
                                        time=int(elapsed_time))  # Use the elapsed time here
 
-    except AssertionError as e:
+    except (AssertionError, StaleElementReferenceException, TimeoutException) as e:
         # If there's an assertion error, capture the failure reason
         failure_reason = str(e)
         # Record the end time after the test completes (in case of failure)
@@ -227,7 +228,7 @@ def test_dashboard_unknown_status(driver_uk_prod_login_admin, run_id):
         qase_client.update_test_result(run_id, case_id, "passed", comment="Test completed successfully",
                                        time=int(elapsed_time))  # Use the elapsed time here
 
-    except AssertionError as e:
+    except (AssertionError, StaleElementReferenceException, TimeoutException) as e:
         # If there's an assertion error, capture the failure reason
         failure_reason = str(e)
         # Record the end time after the test completes (in case of failure)
@@ -290,7 +291,7 @@ def test_dashboard_active_controllers(driver_uk_prod_login_admin, run_id):
         qase_client.update_test_result(run_id, case_id, "passed", comment="Test completed successfully",
                                        time=int(elapsed_time))  # Use the elapsed time here
 
-    except AssertionError as e:
+    except (AssertionError, StaleElementReferenceException, TimeoutException) as e:
         # If there's an assertion error, capture the failure reason
         failure_reason = str(e)
         # Record the end time after the test completes (in case of failure)
@@ -362,7 +363,7 @@ def test_dashboard_headsets(driver_uk_prod_login_admin, run_id):
         qase_client.update_test_result(run_id, case_id, "passed", comment="Test completed successfully",
                                        time=int(elapsed_time))  # Use the elapsed time here
 
-    except AssertionError as e:
+    except (AssertionError, StaleElementReferenceException, TimeoutException) as e:
         # If there's an assertion error, capture the failure reason
         failure_reason = str(e)
         # Record the end time after the test completes (in case of failure)
@@ -421,7 +422,7 @@ def test_navigate_to_headsets_details_page_from_dashboard(driver_uk_prod_login_a
         qase_client.update_test_result(run_id, case_id, "passed", comment="Test completed successfully",
                                        time=int(elapsed_time))  # Use the elapsed time here
 
-    except AssertionError as e:
+    except (AssertionError, StaleElementReferenceException, TimeoutException) as e:
         # If there's an assertion error, capture the failure reason
         failure_reason = str(e)
         # Record the end time after the test completes (in case of failure)
@@ -489,7 +490,7 @@ def test_dashboard_handsets(driver_uk_prod_login_admin, run_id):
         qase_client.update_test_result(run_id, case_id, "passed", comment="Test completed successfully",
                                        time=int(elapsed_time))  # Use the elapsed time here
 
-    except AssertionError as e:
+    except (AssertionError, StaleElementReferenceException, TimeoutException) as e:
         # If there's an assertion error, capture the failure reason
         failure_reason = str(e)
         # Record the end time after the test completes (in case of failure)
@@ -550,7 +551,7 @@ def test_navigate_to_handsets_details_page_from_dashboard(driver_uk_prod_login_a
         qase_client.update_test_result(run_id, case_id, "passed", comment="Test completed successfully",
                                        time=int(elapsed_time))  # Use the elapsed time here
 
-    except AssertionError as e:
+    except (AssertionError, StaleElementReferenceException, TimeoutException) as e:
         # If there's an assertion error, capture the failure reason
         failure_reason = str(e)
         # Record the end time after the test completes (in case of failure)
@@ -618,7 +619,7 @@ def test_dashboard_callpoints(driver_uk_prod_login_admin, run_id):
         qase_client.update_test_result(run_id, case_id, "passed", comment="Test completed successfully",
                                        time=int(elapsed_time))  # Use the elapsed time here
 
-    except AssertionError as e:
+    except (AssertionError, StaleElementReferenceException, TimeoutException) as e:
         # If there's an assertion error, capture the failure reason
         failure_reason = str(e)
         # Record the end time after the test completes (in case of failure)
@@ -680,7 +681,7 @@ def test_navigate_to_callpoints_details_page_from_dashboard(driver_uk_prod_login
         qase_client.update_test_result(run_id, case_id, "passed", comment="Test completed successfully",
                                        time=int(elapsed_time))  # Use the elapsed time here
 
-    except AssertionError as e:
+    except (AssertionError, StaleElementReferenceException, TimeoutException) as e:
         # If there's an assertion error, capture the failure reason
         failure_reason = str(e)
         # Record the end time after the test completes (in case of failure)
@@ -749,7 +750,7 @@ def test_dashboard_keypads(driver_uk_prod_login_admin, run_id):
         qase_client.update_test_result(run_id, case_id, "passed", comment="Test completed successfully",
                                        time=int(elapsed_time))
 
-    except AssertionError as e:
+    except (AssertionError, StaleElementReferenceException, TimeoutException) as e:
         # If there's an assertion error, capture the failure reason
         failure_reason = str(e)
 
@@ -816,7 +817,7 @@ def test_navigate_to_keypads_details_page_from_dashboard(driver_uk_prod_login_ad
         qase_client.update_test_result(run_id, case_id, "passed", comment="Test completed successfully",
                                        time=int(elapsed_time))  # Use the elapsed time here
 
-    except AssertionError as e:
+    except (AssertionError, StaleElementReferenceException, TimeoutException) as e:
         # If there's an assertion error, capture the failure reason
         failure_reason = str(e)
         # Record the end time after the test completes (in case of failure)

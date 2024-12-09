@@ -7,6 +7,8 @@ on:
   pull_request:
     branches:
       - "*"  # Run the pipeline on all pull requests
+  schedule:
+    - cron: '0 13 * * *'  # Run every day at 13:00 UTC
 
 jobs:
   test:
@@ -22,7 +24,6 @@ jobs:
       ADMIN_PASSWORD: vocovoT3st!ng@utomation
       QASE_API_TOKEN: ae98bb7b27408a4c8c7be2651e35b061d55f719c00a7f31489e005073606961a
       QASE_PROJECT_CODE: PST
-
 
     steps:
     - name: Checkout code

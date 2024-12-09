@@ -3,6 +3,7 @@ from pytest import mark
 from qase_client import QaseClient
 import time
 import os
+from selenium.common.exceptions import StaleElementReferenceException, TimeoutException
 
 
 @mark.portaluksmoketests
@@ -64,7 +65,7 @@ def test_user_login(driver, run_id):
         qase_client.update_test_result(run_id, case_id, "passed", comment="Test completed successfully",
                                        time=int(elapsed_time))  # Use the elapsed time here
 
-    except AssertionError as e:
+    except (AssertionError, StaleElementReferenceException, TimeoutException) as e:
         # If there's an assertion error, capture the failure reason
         failure_reason = str(e)
 
@@ -148,7 +149,7 @@ def test_user_negative_login_attempt(driver, run_id):
         qase_client.update_test_result(run_id, case_id, "passed", comment="Test completed successfully",
                                        time=int(elapsed_time))  # Use the elapsed time here
 
-    except AssertionError as e:
+    except (AssertionError, StaleElementReferenceException, TimeoutException) as e:
         # If there's an assertion error, capture the failure reason
         failure_reason = str(e)
 
@@ -230,7 +231,7 @@ def test_user_forgot_password(driver, run_id):
         qase_client.update_test_result(run_id, case_id, "passed", comment="Test completed successfully",
                                        time=int(elapsed_time))  # Use the elapsed time here
 
-    except AssertionError as e:
+    except (AssertionError, StaleElementReferenceException, TimeoutException) as e:
         # If there's an assertion error, capture the failure reason
         failure_reason = str(e)
 

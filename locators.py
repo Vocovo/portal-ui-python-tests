@@ -150,6 +150,11 @@ class HomePageHandsetsModal(BasePage):
         "//div[@data-test='handset-dashboard-body']//div[contains(@class, "
         "'data-card-info-item-online')]//div[@class='data-card-info-item-value']"
     )
+
+    headsets_online_count = (
+        By.XPATH,
+        "//div[@data-test='handset-dashboard-body']//div[contains(@class, 'data-card-info-item-online')]//div[@class='data-card-info-item-value']"
+    )
     online_label = (
         By.XPATH,
         "//div[@data-test='handset-dashboard-body']//span[text()='Online']"
