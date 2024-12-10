@@ -171,6 +171,7 @@ def test_user_negative_login_attempt(driver, run_id):
 @mark.portaluksmoketests
 @mark.regression
 @mark.testcaseid("CE-1968")
+@mark.workingon
 def test_user_forgot_password(driver, run_id):
     """The user is able to access the 'forgot password' page and reset their password."""
 
@@ -181,7 +182,7 @@ def test_user_forgot_password(driver, run_id):
     # Record the start time before the test begins
     start_time = time.time()
 
-    case_id = int("PST-9".split('-')[1])  # Extract case ID from marker
+    case_id = int("CE-1968".split('-')[1])  # Extract case ID from marker
 
     # Initialize elapsed_time with a default value
     elapsed_time = None
