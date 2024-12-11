@@ -19,13 +19,6 @@ def test_filtering_by_group_internal_vocovo(driver_uk_prod_login_admin, run_id):
     failure_reason = None  # Initialize failure_reason to None
     qase_client = QaseClient()  # Initialize the Qase client
 
-    base_filter_title = homepage.dropdown_button.get_text
-
-    # On the homepage dashboard, the filter should be set to "Strongbyte Solutions Ltd"
-    assert base_filter_title == "Strongbyte Solutions Ltd"
-
-    default_page_headsets_active_number = hpc.active_devices_count.get_text
-
     # Record the start time before the test begins
     start_time = time.time()
 
@@ -35,26 +28,40 @@ def test_filtering_by_group_internal_vocovo(driver_uk_prod_login_admin, run_id):
     elapsed_time = None
 
     try:
-        # STEP 1: Click the dropdown button
+        # STEP 1: Get the base filter title from the homepage
+        # EXPECTED RESULT: The filter should be set to "Strongbyte Solutions Ltd"
+        base_filter_title = homepage.dropdown_button.get_text
+        assert base_filter_title == "Strongbyte Solutions Ltd", (
+            f"Expected 'Strongbyte Solutions Ltd', but got '{base_filter_title}'"
+        )
+
+        # STEP 2: Retrieve the number of active devices from the default dashboard -> headsets
+        # EXPECTED RESULT: The number should reflect the correct count of active devices.
+        default_page_headsets_active_number = hpc.active_devices_count.get_text
+
+        # STEP 3: Click the dropdown button
         # EXPECTED RESULT: The dropdown menu should open.
         homepage.dropdown_button.click()
 
-        # STEP 2: Type "Vocovo Internal" into the input field
+        # STEP 4: Type "Vocovo Internal" into the input field
         # EXPECTED RESULT: The input field should accept the text.
         homepage.dropdown_input.send_keys("Vocovo Internal")
 
-        # STEP 3: Click on the "Vocovo Internal" option from the dropdown list
+        # STEP 5: Click on the "Vocovo Internal" option from the dropdown list
         # EXPECTED RESULT: The dropdown should close, and the selection should be made.
         homepage.dropdown_vocovo_internal_option.click()
 
-        # STEP 4: Verify that the "VoCoVo Internal" label is displayed
+        # STEP 6: Verify that the "VoCoVo Internal" label is displayed
         # EXPECTED RESULT: The label should contain the text "VoCoVo Internal".
         assert homepage.vocovo_internal_label_filtering.get_text == "VoCoVo Internal", \
             "The filtering label does not match the expected text."
 
-        # STEP 5: Verify that the number of active devices changes according to the filters
-        # EXPECTED RESULT: The number should reflect the correct number of active devices according to the filters
+        # STEP 7: Retrieve the number of active devices from the Vocovo Internal Group dashboard -> headsets
+        # EXPECTED RESULT: The number should reflect the correct count of active devices according to the filters.
         vocovo_internal_active_number = hpc.active_devices_count.get_text
+
+        # STEP 8: Verify that the number of active devices changes according to the filters
+        # EXPECTED RESULT: The number should reflect the correct number of active devices according to the filters
         assert default_page_headsets_active_number != vocovo_internal_active_number
 
         # Record the end time after the test completes
@@ -94,13 +101,6 @@ def test_filtering_by_group_internal_vocovo_active_controllers(driver_uk_prod_lo
     failure_reason = None  # Initialize failure_reason to None
     qase_client = QaseClient()  # Initialize the Qase client
 
-    base_filter_title = homepage.dropdown_button.get_text
-
-    # On the homepage dashboard the filter should be set to "Strongbyte Solutions Ltd"
-    assert base_filter_title == "Strongbyte Solutions Ltd"
-
-    default_page_headsets_active_number = hpc.active_devices_count.get_text
-
     # Record the start time before the test begins
     start_time = time.time()
 
@@ -110,26 +110,40 @@ def test_filtering_by_group_internal_vocovo_active_controllers(driver_uk_prod_lo
     elapsed_time = None
 
     try:
-        # STEP 1: Click the dropdown button
+        # STEP 1: Get the base filter title from the homepage
+        # EXPECTED RESULT: The filter should be set to "Strongbyte Solutions Ltd"
+        base_filter_title = homepage.dropdown_button.get_text
+        assert base_filter_title == "Strongbyte Solutions Ltd", (
+            f"Expected 'Strongbyte Solutions Ltd', but got '{base_filter_title}'"
+        )
+
+        # STEP 2: Retrieve the number of active devices from the default dashboard -> headsets
+        # EXPECTED RESULT: The number should reflect the correct count of active devices.
+        default_page_headsets_active_number = hpc.active_devices_count.get_text
+
+        # STEP 3: Click the dropdown button
         # EXPECTED RESULT: The dropdown menu should open.
         homepage.dropdown_button.click()
 
-        # STEP 2: Type "Vocovo Internal" into the input field
+        # STEP 4: Type "Vocovo Internal" into the input field
         # EXPECTED RESULT: The input field should accept the text.
         homepage.dropdown_input.send_keys("Vocovo Internal")
 
-        # STEP 3: Click on the "Vocovo Internal" option from the dropdown list
+        # STEP 5: Click on the "Vocovo Internal" option from the dropdown list
         # EXPECTED RESULT: The dropdown should close, and the selection should be made.
         homepage.dropdown_vocovo_internal_option.click()
 
-        # STEP 4: Verify that the "VoCoVo Internal" label is displayed
+        # STEP 6: Verify that the "VoCoVo Internal" label is displayed
         # EXPECTED RESULT: The label should contain the text "VoCoVo Internal".
         assert homepage.vocovo_internal_label_filtering.get_text == "VoCoVo Internal", \
             "The filtering label does not match the expected text."
 
-        # STEP 5: Verify that the number of active devices changes according to the filters
-        # EXPECTED RESULT: The number should reflect the correct number of active devices according to the filters
+        # STEP 7: Retrieve the number of active devices from the Vocovo Internal Group dashboard -> headsets
+        # EXPECTED RESULT: The number should reflect the correct count of active devices according to the filters.
         vocovo_internal_active_number = hpc.active_devices_count.get_text
+
+        # STEP 8: Verify that the number of active devices changes according to the filters
+        # EXPECTED RESULT: The number should reflect the correct number of active devices according to the filters
         assert default_page_headsets_active_number != vocovo_internal_active_number
 
         # Record the end time after the test completes
@@ -169,13 +183,6 @@ def test_filtering_by_group_internal_vocovo_inactive_controllers(driver_uk_prod_
     failure_reason = None  # Initialize failure_reason to None
     qase_client = QaseClient()  # Initialize the Qase client
 
-    base_filter_title = homepage.dropdown_button.get_text
-
-    # On the homepage dashboard the filter should be set to "Strongbyte Solutions Ltd"
-    assert base_filter_title == "Strongbyte Solutions Ltd"
-
-    default_page_headsets_inactive_number = hpc.inactive_devices_count.get_text
-
     # Record the start time before the test begins
     start_time = time.time()
 
@@ -185,26 +192,40 @@ def test_filtering_by_group_internal_vocovo_inactive_controllers(driver_uk_prod_
     elapsed_time = None
 
     try:
-        # STEP 1: Click the dropdown button
+        # STEP 1: Get the base filter title from the homepage
+        # EXPECTED RESULT: The filter should be set to "Strongbyte Solutions Ltd"
+        base_filter_title = homepage.dropdown_button.get_text
+        assert base_filter_title == "Strongbyte Solutions Ltd", (
+            f"Expected 'Strongbyte Solutions Ltd', but got '{base_filter_title}'"
+        )
+
+        # STEP 2: Retrieve the number of inactive devices from the default dashboard -> headsets
+        # EXPECTED RESULT: The number should reflect the correct count of inactive devices.
+        default_page_headsets_inactive_number = hpc.inactive_devices_count.get_text
+
+        # STEP 3: Click the dropdown button
         # EXPECTED RESULT: The dropdown menu should open.
         homepage.dropdown_button.click()
 
-        # STEP 2: Type "Vocovo Internal" into the input field
+        # STEP 4: Type "Vocovo Internal" into the input field
         # EXPECTED RESULT: The input field should accept the text.
         homepage.dropdown_input.send_keys("Vocovo Internal")
 
-        # STEP 3: Click on the "Vocovo Internal" option from the dropdown list
+        # STEP 5: Click on the "Vocovo Internal" option from the dropdown list
         # EXPECTED RESULT: The dropdown should close, and the selection should be made.
         homepage.dropdown_vocovo_internal_option.click()
 
-        # STEP 4: Verify that the "VoCoVo Internal" label is displayed
+        # STEP 6: Verify that the "VoCoVo Internal" label is displayed
         # EXPECTED RESULT: The label should contain the text "VoCoVo Internal".
         assert homepage.vocovo_internal_label_filtering.get_text == "VoCoVo Internal", \
             "The filtering label does not match the expected text."
 
-        # STEP 5: Verify that the number of inactive devices changes according to the filters
-        # EXPECTED RESULT: The number should reflect the correct number of inactive devices according to the filters
+        # STEP 7: Retrieve the number of inactive devices from the Vocovo Internal Group dashboard -> headsets
+        # EXPECTED RESULT: The number should reflect the correct count of inactive devices according to the filters.
         vocovo_internal_inactive_number = hpc.inactive_devices_count.get_text
+
+        # STEP 8: Verify that the number of inactive devices changes according to the filters
+        # EXPECTED RESULT: The number should reflect the correct number of inactive devices according to the filters
         assert default_page_headsets_inactive_number != vocovo_internal_inactive_number
 
         # Record the end time after the test completes
@@ -232,7 +253,6 @@ def test_filtering_by_group_internal_vocovo_inactive_controllers(driver_uk_prod_
         raise
 
 
-
 @mark.portaluksmoketests
 @mark.regression
 @mark.testcaseid("PST-20")
@@ -245,13 +265,6 @@ def test_filtering_by_group_internal_vocovo_inactive_controllers(driver_uk_prod_
     failure_reason = None  # Initialize failure_reason to None
     qase_client = QaseClient()  # Initialize the Qase client
 
-    base_filter_title = homepage.dropdown_button.get_text
-
-    # On the homepage dashboard, the filter should be set to "Strongbyte Solutions Ltd"
-    assert base_filter_title == "Strongbyte Solutions Ltd"
-
-    default_page_headsets_fault_number = hpc.fault_devices_title.get_text
-
     # Record the start time before the test begins
     start_time = time.time()
 
@@ -261,27 +274,40 @@ def test_filtering_by_group_internal_vocovo_inactive_controllers(driver_uk_prod_
     elapsed_time = None
 
     try:
-        # STEP 1: Click the dropdown button
+        # STEP 1: Get the base filter title from the homepage
+        # EXPECTED RESULT: The filter should be set to "Strongbyte Solutions Ltd"
+        base_filter_title = homepage.dropdown_button.get_text
+        assert base_filter_title == "Strongbyte Solutions Ltd", (
+            f"Expected 'Strongbyte Solutions Ltd', but got '{base_filter_title}'"
+        )
+
+        # STEP 2: Get the default number of fault devices
+        # EXPECTED RESULT: The default number should be the number of fault devices on the dashboard.
+        default_page_headsets_fault_number = hpc.fault_devices_title.get_text
+
+        # STEP 3: Click the dropdown button
         # EXPECTED RESULT: The dropdown menu should open.
         homepage.dropdown_button.click()
 
-        # STEP 2: Type "Vocovo Internal" into the input field
+        # STEP 4: Type "Vocovo Internal" into the input field
         # EXPECTED RESULT: The input field should accept the text.
         homepage.dropdown_input.send_keys("Vocovo Internal")
 
-        # STEP 3: Click on the "Vocovo Internal" option from the dropdown list
+        # STEP 5: Click on the "Vocovo Internal" option from the dropdown list
         # EXPECTED RESULT: The dropdown should close, and the selection should be made.
         homepage.dropdown_vocovo_internal_option.click()
 
-        # STEP 4: Verify that the "VoCoVo Internal" label is displayed
+        # STEP 6: Verify that the "VoCoVo Internal" label is displayed
         # EXPECTED RESULT: The label should contain the text "VoCoVo Internal".
         assert homepage.vocovo_internal_label_filtering.get_text == "VoCoVo Internal", \
             "The filtering label does not match the expected text."
 
-        # STEP 5: Verify that the number of fault devices changes according to the filters
+        # STEP 7: Verify that the number of fault devices changes according to the filters
         # EXPECTED RESULT: The number should reflect the correct number of fault devices according to the filters
         vocovo_internal_fault_number = hpc.fault_devices_count.get_text
-        assert default_page_headsets_fault_number != vocovo_internal_fault_number
+        assert default_page_headsets_fault_number != vocovo_internal_fault_number, (
+            f"Expected fault devices count to change, but it remained {default_page_headsets_fault_number}"
+        )
 
         # Record the end time after the test completes
         end_time = time.time()
@@ -319,13 +345,6 @@ def test_filtering_by_group_internal_vocovo_unknown_status_controllers(driver_uk
     failure_reason = None  # Initialize failure_reason to None
     qase_client = QaseClient()  # Initialize the Qase client
 
-    base_filter_title = homepage.dropdown_button.get_text
-
-    # On the homepage dashboard the filter should be set to "Strongbyte Solutions Ltd"
-    assert base_filter_title == "Strongbyte Solutions Ltd"
-
-    default_page_headsets_unknown_status_number = hpc.unknown_status_devices_count.get_text
-
     # Record the start time before the test begins
     start_time = time.time()
 
@@ -335,26 +354,40 @@ def test_filtering_by_group_internal_vocovo_unknown_status_controllers(driver_uk
     elapsed_time = None
 
     try:
-        # STEP 1: Click the dropdown button
+        # STEP 1: Get the base filter title from the homepage
+        # EXPECTED RESULT: The filter should be set to "Strongbyte Solutions Ltd"
+        base_filter_title = homepage.dropdown_button.get_text
+        assert base_filter_title == "Strongbyte Solutions Ltd", (
+            f"Expected 'Strongbyte Solutions Ltd', but got '{base_filter_title}'"
+        )
+
+        # STEP 2: Retrieve the number of "Unknown status" devices from the default dashboard -> headsets
+        # EXPECTED RESULT: The number should reflect the correct count of "Unknown status" devices.
+        default_page_headsets_unknown_status_number = hpc.unknown_status_devices_count.get_text
+
+        # STEP 3: Click the dropdown button
         # EXPECTED RESULT: The dropdown menu should open.
         homepage.dropdown_button.click()
 
-        # STEP 2: Type "Vocovo Internal" into the input field
+        # STEP 4: Type "Vocovo Internal" into the input field
         # EXPECTED RESULT: The input field should accept the text.
         homepage.dropdown_input.send_keys("Vocovo Internal")
 
-        # STEP 3: Click on the "Vocovo Internal" option from the dropdown list
+        # STEP 5: Click on the "Vocovo Internal" option from the dropdown list
         # EXPECTED RESULT: The dropdown should close, and the selection should be made.
         homepage.dropdown_vocovo_internal_option.click()
 
-        # STEP 4: Verify that the "VoCoVo Internal" label is displayed
+        # STEP 6: Verify that the "VoCoVo Internal" label is displayed
         # EXPECTED RESULT: The label should contain the text "VoCoVo Internal".
         assert homepage.vocovo_internal_label_filtering.get_text == "VoCoVo Internal", \
             "The filtering label does not match the expected text."
 
-        # STEP 5: Verify that the number of "Unknown status" devices changes according to the filters
-        # EXPECTED RESULT: The number should reflect the correct number of "Unknown status" devices according to the filters
+        # STEP 7: Retrieve the number of "Unknown status" devices from the Vocovo Internal Group dashboard -> headsets
+        # EXPECTED RESULT: The number should reflect the correct count of "Unknown status" devices according to the filters.
         vocovo_internal_unknown_number = hpc.unknown_status_devices_count.get_text
+
+        # STEP 8: Verify that the number of "Unknown status" devices changes according to the filters
+        # EXPECTED RESULT: The number should reflect the correct number of "Unknown status" devices according to the filters
         assert default_page_headsets_unknown_status_number != vocovo_internal_unknown_number
 
         # Record the end time after the test completes
@@ -395,17 +428,6 @@ def test_filtering_by_group_internal_vocovo_headset_modal(driver_uk_prod_login_a
     failure_reason = None  # Initialize failure_reason to None
     qase_client = QaseClient()  # Initialize the Qase client
 
-    base_filter_title = homepage.dropdown_button.get_text
-
-    # On the homepage dashboard the filter should be set to "Strongbyte Solutions Ltd"
-    assert base_filter_title == "Strongbyte Solutions Ltd"
-
-    # Retrieve the values from the Strongbyte Solutions Ltd Group dashboard -> headsets
-    default_page_online_headsets = hphm.online_count.get_text
-    default_page_offline_headsets = hphm.offline_count.get_text
-    default_page_offline_30_days = hphm.long_offline_count.get_text
-    default_page_unknown_headsets = hphm.unknown_count.get_text
-
     # Record the start time before the test begins
     start_time = time.time()
 
@@ -415,30 +437,45 @@ def test_filtering_by_group_internal_vocovo_headset_modal(driver_uk_prod_login_a
     elapsed_time = None
 
     try:
-        # STEP 1: Click the dropdown button
+        # STEP 1: Get the base filter title from the homepage
+        # EXPECTED RESULT: The filter should be set to "Strongbyte Solutions Ltd"
+        base_filter_title = homepage.dropdown_button.get_text
+        assert base_filter_title == "Strongbyte Solutions Ltd", (
+            f"Expected 'Strongbyte Solutions Ltd', but got '{base_filter_title}'"
+        )
+
+        # STEP 2: Retrieve the values from the Strongbyte Solutions Ltd Group dashboard -> headsets
+        # EXPECTED RESULT: The number should reflect the correct number of headsets for each status.
+        default_page_online_headsets = hphm.online_count.get_text
+        default_page_offline_headsets = hphm.offline_count.get_text
+        default_page_offline_30_days = hphm.long_offline_count.get_text
+        default_page_unknown_headsets = hphm.unknown_count.get_text
+
+        # STEP 3: Click the dropdown button
         # EXPECTED RESULT: The dropdown menu should open.
         homepage.dropdown_button.click()
 
-        # STEP 2: Type "Vocovo Internal" into the input field
+        # STEP 4: Type "Vocovo Internal" into the input field
         # EXPECTED RESULT: The input field should accept the text.
         homepage.dropdown_input.send_keys("Vocovo Internal")
 
-        # STEP 3: Click on the "Vocovo Internal" option from the dropdown list
+        # STEP 5: Click on the "Vocovo Internal" option from the dropdown list
         # EXPECTED RESULT: The dropdown should close, and the selection should be made.
         homepage.dropdown_vocovo_internal_option.click()
 
-        # STEP 4: Verify that the "VoCoVo Internal" label is displayed
+        # STEP 6: Verify that the "VoCoVo Internal" label is displayed
         # EXPECTED RESULT: The label should contain the text "VoCoVo Internal".
         assert homepage.vocovo_internal_label_filtering.get_text == "VoCoVo Internal", \
             "The filtering label does not match the expected text."
 
-        # Retrieve the values from the Vocovo Internal Group dashboard -> headsets
+        # STEP 7: Retrieve the values from the Vocovo Internal Group dashboard -> headsets
+        # EXPECTED RESULT: The number should reflect the correct number of headsets for each status.
         vocovo_internal_page_online_headsets = hphm.online_count.get_text
         vocovo_internal_page_offline_headsets = hphm.offline_count.get_text
         vocovo_internal_page_offline_30_days = hphm.long_offline_count.get_text
         vocovo_internal_page_unknown_headsets = hphm.unknown_count.get_text
 
-        # STEP 5: Verify that the number of headsets changes according to the filters
+        # STEP 8: Verify that the number of headsets changes according to the filters
         # EXPECTED RESULT: The number should reflect the correct number of headsets according to the filters
         assert default_page_online_headsets != vocovo_internal_page_online_headsets
         assert default_page_offline_headsets != vocovo_internal_page_offline_headsets
@@ -476,6 +513,7 @@ def test_filtering_by_group_internal_vocovo_headset_modal(driver_uk_prod_login_a
 def test_navigate_to_the_headsets_module_details_page_for_a_group(driver_uk_prod_login_admin, run_id):
     """Verify that the headsets module displays all necessary data for the
     selected group (online, offline, offline for more than 30 days, and unknown)"""
+
     # Record the start time before the test begins
     start_time = time.time()
 
@@ -587,17 +625,6 @@ def test_filtering_by_group_internal_vocovo_handsets_modal(driver_uk_prod_login_
     failure_reason = None  # Initialize failure_reason to None
     qase_client = QaseClient()  # Initialize the Qase client
 
-    base_filter_title = homepage.dropdown_button.get_text
-
-    # On the homebage dashboard the filter should be set to "Strongbyte Solutions Ltd"
-    assert base_filter_title == "Strongbyte Solutions Ltd"
-
-    # Retrieve the values from the Strongbyte Solutions Ltd Group dashboard -> headsets
-    default_page_online_handsets = handsets.online_count.get_text
-    default_page_offline_handsets = handsets.offline_count.get_text
-    default_page_offline_30_days = handsets.long_offline_count.get_text
-    default_page_unknown_handsets = handsets.unknown_count.get_text
-
     # Record the start time before the test begins
     start_time = time.time()
 
@@ -607,31 +634,46 @@ def test_filtering_by_group_internal_vocovo_handsets_modal(driver_uk_prod_login_
     elapsed_time = None
 
     try:
-        # STEP 1: Click the dropdown button
+        # STEP 1: Get the base filter title from the homepage
+        # EXPECTED RESULT: The filter should be set to "Strongbyte Solutions Ltd"
+        base_filter_title = homepage.dropdown_button.get_text
+        assert base_filter_title == "Strongbyte Solutions Ltd", (
+            f"Expected 'Strongbyte Solutions Ltd', but got '{base_filter_title}'"
+        )
+
+        # STEP 2: Retrieve the values from the Strongbyte Solutions Ltd Group dashboard -> handsets
+        # EXPECTED RESULT: The number of devices should be the correct count for each category.
+        default_page_online_handsets = handsets.online_count.get_text
+        default_page_offline_handsets = handsets.offline_count.get_text
+        default_page_offline_30_days = handsets.long_offline_count.get_text
+        default_page_unknown_handsets = handsets.unknown_count.get_text
+
+        # STEP 3: Click the dropdown button
         # EXPECTED RESULT: The dropdown menu should open.
         homepage.dropdown_button.click()
 
-        # STEP 2: Type "Vocovo Internal" into the input field
+        # STEP 4: Type "Vocovo Internal" into the input field
         # EXPECTED RESULT: The input field should accept the text.
         homepage.dropdown_input.send_keys("Vocovo Internal")
 
-        # STEP 3: Click on the "Vocovo Internal" option from the dropdown list
+        # STEP 5: Click on the "Vocovo Internal" option from the dropdown list
         # EXPECTED RESULT: The dropdown should close, and the selection should be made.
         homepage.dropdown_vocovo_internal_option.click()
 
-        # STEP 4: Verify that the "VoCoVo Internal" label is displayed
+        # STEP 6: Verify that the "VoCoVo Internal" label is displayed
         # EXPECTED RESULT: The label should contain the text "VoCoVo Internal".
         assert homepage.vocovo_internal_label_filtering.get_text == "VoCoVo Internal", \
             "The filtering label does not match the expected text."
 
-        # Retrieve the values from the Vocovo Internal Group dashboard -> headsets
+        # STEP 7: Retrieve the values from the Vocovo Internal Group dashboard -> handsets
+        # EXPECTED RESULT: The number of devices should be the correct count for each category.
         vocovo_internal_page_online_handsets = handsets.online_count.get_text
         vocovo_internal_page_offline_handsets = handsets.offline_count.get_text
         vocovo_internal_page_offline_30_days = handsets.long_offline_count.get_text
         vocovo_internal_page_unknown_handsets = handsets.unknown_count.get_text
 
-        # STEP 5: Verify that the number of active devices changes according to the filters
-        # EXPECTED RESULT: The number should reflect the correct number of active devices according to thne filters
+        # STEP 8: Verify that the number of handsets changes according to the filters
+        # EXPECTED RESULT: The number should reflect the correct number of handsets according to the filters
         assert default_page_online_handsets != vocovo_internal_page_online_handsets
         assert default_page_offline_handsets != vocovo_internal_page_offline_handsets
         assert default_page_offline_30_days != vocovo_internal_page_offline_30_days
@@ -668,6 +710,7 @@ def test_filtering_by_group_internal_vocovo_handsets_modal(driver_uk_prod_login_
 def test_navigate_to_the_handsets_module_details_page_for_a_group(driver_uk_prod_login_admin, run_id):
     """Verify that the headsets module displays all necessary data for the
     selected group (online, offline, offline for more than 30 days, and unknown)"""
+
     # Record the start time before the test begins
     start_time = time.time()
 
@@ -678,7 +721,7 @@ def test_navigate_to_the_handsets_module_details_page_for_a_group(driver_uk_prod
     failure_reason = None  # Initialize failure_reason to None
     qase_client = QaseClient()  # Initialize the Qase client
 
-    # Retrieve the values from the Strongbyte Solutions Ltd Group dashboard -> headsets
+    # Retrieve the values from the Strongbyte Solutions Ltd Group dashboard -> handsets
     default_page_online_handsets = handsetshomepage.online_count.get_text
     default_page_offline_handsets = handsetshomepage.offline_count.get_text
     default_page_offline_30_days = handsetshomepage.long_offline_count.get_text
@@ -708,21 +751,18 @@ def test_navigate_to_the_handsets_module_details_page_for_a_group(driver_uk_prod
             "The filtering label does not match the expected text."
 
         # Retrieve the values from the Vocovo Internal Group dashboard -> handsets
-
         vocovo_internal_page_online_handsets = handsetshomepage.online_count.get_text
         vocovo_internal_page_offline_handsets = handsetshomepage.offline_count.get_text
         vocovo_internal_page_offline_30_days = handsetshomepage.long_offline_count.get_text
         vocovo_internal_page_unknown_handsets = handsetshomepage.unknown_count.get_text
 
+        # Handle edge cases where the count might be "-"
         if vocovo_internal_page_online_handsets == "-":
             vocovo_internal_page_online_handsets = "0"
-
         if vocovo_internal_page_offline_handsets == "-":
             vocovo_internal_page_offline_handsets = "0"
-
         if vocovo_internal_page_offline_30_days == "-":
             vocovo_internal_page_offline_30_days = "0"
-
         if vocovo_internal_page_unknown_handsets == "-":
             vocovo_internal_page_unknown_handsets = "0"
 
@@ -788,17 +828,6 @@ def test_filtering_by_group_internal_vocovo_callpoints_modal(driver_uk_prod_logi
     failure_reason = None  # Initialize failure_reason to None
     qase_client = QaseClient()  # Initialize the Qase client
 
-    base_filter_title = homepage.dropdown_button.get_text
-
-    # On the homebage dashboard the filter should be set to "Strongbyte Solutions Ltd"
-    assert base_filter_title == "Strongbyte Solutions Ltd"
-
-    # Retrieve the values from the Strongbyte Solutions Ltd Group dashboard -> call points
-    default_page_online_callpoints = callpoints.online_count.get_text
-    default_page_offline_callpoints = callpoints.offline_count.get_text
-    default_page_offline_30_days = callpoints.long_offline_count.get_text
-    default_page_unknown_callpoints = callpoints.unknown_count.get_text
-
     # Record the start time before the test begins
     start_time = time.time()
 
@@ -808,43 +837,57 @@ def test_filtering_by_group_internal_vocovo_callpoints_modal(driver_uk_prod_logi
     elapsed_time = None
 
     try:
-        # STEP 1: Click the dropdown button
+        # STEP 1: Get the base filter title from the homepage
+        # EXPECTED RESULT: The filter should be set to "Strongbyte Solutions Ltd"
+        base_filter_title = homepage.dropdown_button.get_text
+        assert base_filter_title == "Strongbyte Solutions Ltd", (
+            f"Expected 'Strongbyte Solutions Ltd', but got '{base_filter_title}'"
+        )
+
+        # STEP 2: Retrieve the values from the Strongbyte Solutions Ltd Group dashboard -> call points
+        # EXPECTED RESULT: The number of devices should be the correct count for each category.
+        default_page_online_callpoints = callpoints.online_count.get_text
+        default_page_offline_callpoints = callpoints.offline_count.get_text
+        default_page_offline_30_days = callpoints.long_offline_count.get_text
+        default_page_unknown_callpoints = callpoints.unknown_count.get_text
+
+        # STEP 3: Click the dropdown button
         # EXPECTED RESULT: The dropdown menu should open.
         homepage.dropdown_button.click()
 
-        # STEP 2: Type "Vocovo Internal" into the input field
+        # STEP 4: Type "Vocovo Internal" into the input field
         # EXPECTED RESULT: The input field should accept the text.
         homepage.dropdown_input.send_keys("Vocovo Internal")
 
-        # STEP 3: Click on the "Vocovo Internal" option from the dropdown list
+        # STEP 5: Click on the "Vocovo Internal" option from the dropdown list
         # EXPECTED RESULT: The dropdown should close, and the selection should be made.
         homepage.dropdown_vocovo_internal_option.click()
 
-        # STEP 4: Verify that the "VoCoVo Internal" label is displayed
+        # STEP 6: Verify that the "VoCoVo Internal" label is displayed
         # EXPECTED RESULT: The label should contain the text "VoCoVo Internal".
         assert homepage.vocovo_internal_label_filtering.get_text == "VoCoVo Internal", \
             "The filtering label does not match the expected text."
 
-        # Retrieve the values from the Vocovo Internal Group dashboard -> headsets
+        # Retrieve the values from the Vocovo Internal Group dashboard -> call points
         vocovo_internal_page_online_callpoints = callpoints.online_count.get_text
         vocovo_internal_page_offline_callpoints = callpoints.offline_count.get_text
         vocovo_internal_page_offline_30_days = callpoints.long_offline_count.get_text
         vocovo_internal_page_unknown_callpoints = callpoints.unknown_count.get_text
 
-
+        # Handle edge cases where the count might be "-"
         if vocovo_internal_page_online_callpoints == "-":
-            vocovo_internal_page_online_handsets = "0"
+            vocovo_internal_page_online_callpoints = "0"
 
         if vocovo_internal_page_offline_callpoints == "-":
-            vocovo_internal_page_offline_handsets = "0"
+            vocovo_internal_page_offline_callpoints = "0"
 
         if vocovo_internal_page_offline_30_days == "-":
             vocovo_internal_page_offline_30_days = "0"
 
         if vocovo_internal_page_unknown_callpoints == "-":
-            vocovo_internal_page_unknown_handsets = "0"
+            vocovo_internal_page_unknown_callpoints = "0"
 
-        # STEP 5: Verify that the number of active devices changes according to the filters
+        # STEP 7: Verify that the number of active devices changes according to the filters
         # EXPECTED RESULT: The number should reflect the correct number of active devices according to the filters
         assert default_page_online_callpoints != vocovo_internal_page_online_callpoints
         assert default_page_offline_callpoints != vocovo_internal_page_offline_callpoints
@@ -921,13 +964,13 @@ def test_navigate_to_the_callpoints_module_details_page_for_a_group(driver_uk_pr
         assert homepage.vocovo_internal_label_filtering.get_text == "VoCoVo Internal", \
             "The filtering label does not match the expected text."
 
-        # Retrieve the values from the Vocovo Internal Group dashboard -> handsets
-
+        # Retrieve the values from the Vocovo Internal Group dashboard -> call points
         vocovo_internal_page_online_callpoints = callpoointshome.online_count.get_text
         vocovo_internal_page_offline_callpoints = callpoointshome.offline_count.get_text
         vocovo_internal_page_offline_30_days = callpoointshome.long_offline_count.get_text
         vocovo_internal_page_unknown_callpoints = callpoointshome.unknown_count.get_text
 
+        # Handle edge cases where the count might be "-"
         if vocovo_internal_page_online_callpoints == "-":
             vocovo_internal_page_online_callpoints = "0"
 
@@ -940,29 +983,30 @@ def test_navigate_to_the_callpoints_module_details_page_for_a_group(driver_uk_pr
         if vocovo_internal_page_unknown_callpoints == "-":
             vocovo_internal_page_unknown_callpoints = "0"
 
-        # More checks to make sure that the group has indeed been changed
+        # STEP 5: Verify that the number of active devices changes according to the filters
+        # EXPECTED RESULT: The number should reflect the correct number of active devices according to the filters
         assert default_page_online_callpoints != vocovo_internal_page_online_callpoints
         assert default_page_offline_callpoints != vocovo_internal_page_offline_callpoints
         assert default_page_offline_30_days != vocovo_internal_page_offline_30_days
         assert default_page_unknown_callpoints != vocovo_internal_page_unknown_callpoints
 
-        # STEP 5: Click on the handsets modal under the Vocovo Internal group
-        # EXPECTED RESULT: The user should be directed to the details page of the headsets for that group
+        # STEP 6: Click on the callpoints modal under the Vocovo Internal group
+        # EXPECTED RESULT: The user should be directed to the details page of the call points for that group
         callpoointshome.callpoints_modal_title.click()
 
         assert "Call Points" in callpoints_details.callpoints_details_page_title.get_text
 
-        # Checks to make sure that the headsets details page indeed belongs to the VoCoVo Internal Group
+        # Checks to make sure that the call points details page indeed belongs to the VoCoVo Internal Group
         time.sleep(3)
-        online_handsets = callpoints_details.online_count.get_text
-        offline_handsets = callpoints_details.offline_count.get_text
+        online_callpoints = callpoints_details.online_count.get_text
+        offline_callpoints = callpoints_details.offline_count.get_text
         offline_for_more = callpoints_details.long_offline_count.get_text
-        unknown_handsets = callpoints_details.unknown_count.get_text
+        unknown_callpoints = callpoints_details.unknown_count.get_text
 
-        assert vocovo_internal_page_online_callpoints == online_handsets
-        assert vocovo_internal_page_offline_callpoints == offline_handsets
+        assert vocovo_internal_page_online_callpoints == online_callpoints
+        assert vocovo_internal_page_offline_callpoints == offline_callpoints
         assert vocovo_internal_page_offline_30_days == offline_for_more
-        assert vocovo_internal_page_unknown_callpoints == unknown_handsets
+        assert vocovo_internal_page_unknown_callpoints == unknown_callpoints
 
         # Record the end time after the test completes
         end_time = time.time()
@@ -1004,10 +1048,10 @@ def test_filtering_by_group_internal_vocovo_callpoints_modal(driver_uk_prod_logi
 
     base_filter_title = homepage.dropdown_button.get_text
 
-    # On the homebage dashboard the filter should be set to "Strongbyte Solutions Ltd"
+    # On the homepage dashboard the filter should be set to "Strongbyte Solutions Ltd"
     assert base_filter_title == "Strongbyte Solutions Ltd"
 
-    # Retrieve the values from the Strongbyte Solutions Ltd Group dashboard -> call points
+    # Retrieve the values from the Strongbyte Solutions Ltd Group dashboard -> keypads
     default_page_online_keypads = keypads.online_count.get_text
     default_page_offline_keypads = keypads.offline_count.get_text
     default_page_offline_30_days = keypads.long_offline_count.get_text
@@ -1039,13 +1083,13 @@ def test_filtering_by_group_internal_vocovo_callpoints_modal(driver_uk_prod_logi
         assert homepage.vocovo_internal_label_filtering.get_text == "VoCoVo Internal", \
             "The filtering label does not match the expected text."
 
-        # Retrieve the values from the Vocovo Internal Group dashboard -> headsets
+        # Retrieve the values from the Vocovo Internal Group dashboard -> keypads
         vocovo_internal_page_online_keypads = keypads.online_count.get_text
         vocovo_internal_page_offline_keypads = keypads.offline_count.get_text
         vocovo_internal_page_offline_30_days = keypads.long_offline_count.get_text
         vocovo_internal_page_unknown_keypads = keypads.unknown_count.get_text
 
-
+        # Handle edge cases where the count might be "-"
         if vocovo_internal_page_online_keypads == "-":
             vocovo_internal_page_online_keypads = "0"
 
@@ -1058,8 +1102,8 @@ def test_filtering_by_group_internal_vocovo_callpoints_modal(driver_uk_prod_logi
         if vocovo_internal_page_unknown_keypads == "-":
             vocovo_internal_page_unknown_keypads = "0"
 
-        # STEP 5: Verify that the number of active devices changes according to the filters
-        # EXPECTED RESULT: The number should reflect the correct number of active devices according to the filters
+        # STEP 5: Verify that the number of keypads changes according to the filters
+        # EXPECTED RESULT: The number should reflect the correct number of keypads according to the filters
         assert default_page_online_keypads != vocovo_internal_page_online_keypads
         assert default_page_offline_keypads != vocovo_internal_page_offline_keypads
         assert default_page_offline_30_days != vocovo_internal_page_offline_30_days
@@ -1135,13 +1179,13 @@ def test_navigate_to_the_callpoints_module_details_page_for_a_group(driver_uk_pr
         assert homepage.vocovo_internal_label_filtering.get_text == "VoCoVo Internal", \
             "The filtering label does not match the expected text."
 
-        # Retrieve the values from the Vocovo Internal Group dashboard -> handsets
-
+        # Retrieve the values from the Vocovo Internal Group dashboard -> keypads
         vocovo_internal_page_online_keypads = keypadshome.online_count.get_text
         vocovo_internal_page_offline_keypads = keypadshome.offline_count.get_text
         vocovo_internal_page_offline_30_days = keypadshome.long_offline_count.get_text
         vocovo_internal_page_unknown_keypads = keypadshome.unknown_count.get_text
 
+        # Handle edge cases where the count might be "-"
         if vocovo_internal_page_online_keypads == "-":
             vocovo_internal_page_online_keypads = "0"
 
@@ -1154,29 +1198,30 @@ def test_navigate_to_the_callpoints_module_details_page_for_a_group(driver_uk_pr
         if vocovo_internal_page_unknown_keypads == "-":
             vocovo_internal_page_unknown_keypads = "0"
 
-        # More checks to make sure that the group has indeed been changed
+        # STEP 5: Verify that the number of keypads changes according to the filters
+        # EXPECTED RESULT: The number should reflect the correct number of keypads according to the filters
         assert default_page_online_keypads != vocovo_internal_page_online_keypads
         assert default_page_offline_keypads != vocovo_internal_page_offline_keypads
         assert default_page_offline_30_days != vocovo_internal_page_offline_30_days
         assert default_page_unknown_keypads != vocovo_internal_page_unknown_keypads
 
-        # STEP 5: Click on the handsets modal under the Vocovo Internal group
-        # EXPECTED RESULT: The user should be directed to the details page of the headsets for that group
+        # STEP 6: Click on the keypads modal under the Vocovo Internal group
+        # EXPECTED RESULT: The user should be directed to the details page of the keypads for that group
         keypadshome.keypads_modal_title.click()
 
         assert "Keypads" in keypads_details.keypads_details_page_title.get_text
 
-        # Checks to make sure that the headsets details page indeed belongs to the VoCoVo Internal Group
+        # Checks to make sure that the keypads details page indeed belongs to the VoCoVo Internal Group
         time.sleep(3)
-        online_handsets = keypads_details.online_count.get_text
-        offline_handsets = keypads_details.offline_count.get_text
+        online_keypads = keypads_details.online_count.get_text
+        offline_keypads = keypads_details.offline_count.get_text
         offline_for_more = keypads_details.long_offline_count.get_text
-        unknown_handsets = keypads_details.unknown_count.get_text
+        unknown_keypads = keypads_details.unknown_count.get_text
 
-        assert vocovo_internal_page_online_keypads == online_handsets
-        assert vocovo_internal_page_offline_keypads == offline_handsets
+        assert vocovo_internal_page_online_keypads == online_keypads
+        assert vocovo_internal_page_offline_keypads == offline_keypads
         assert vocovo_internal_page_offline_30_days == offline_for_more
-        assert vocovo_internal_page_unknown_keypads == unknown_handsets
+        assert vocovo_internal_page_unknown_keypads == unknown_keypads
 
         # Record the end time after the test completes
         end_time = time.time()

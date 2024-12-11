@@ -3,7 +3,7 @@ from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.action_chains import ActionChains
-from selenium.common.exceptions import StaleElementReferenceException
+from selenium.common.exceptions import StaleElementReferenceException, TimeoutException
 import time
 from selenium.webdriver.support.ui import Select
 
@@ -15,10 +15,24 @@ class BaseElement:
         self.web_element = None
         self.find()
 
-    def find(self):
-        element = WebDriverWait(self.driver, 20).until(EC.visibility_of_element_located(locator=self.locator))
-        self.web_element = element
-        return None
+    def find(self, retries=3, wait_time=2):
+        """Finds the element with retry logic for StaleElementReferenceException and TimeoutException."""
+        while retries > 0:
+            try:
+                # Wait for the element to be visible and store it in the web_element
+                self.web_element = WebDriverWait(self.driver, 30).until(
+                    EC.visibility_of_element_located(self.locator)
+                )
+                return
+            except (StaleElementReferenceException, TimeoutException):
+                retries -= 1
+                if retries == 0:
+                    raise Exception(f"Element with locator {self.locator} could not be found after retries.")
+                time.sleep(wait_time)  # Wait before retrying
+                # Re-attempt to find the element
+                WebDriverWait(self.driver, 30).until(
+                    EC.presence_of_element_located(self.locator)
+                )
 
     def clear(self):
         assert self.web_element
@@ -44,18 +58,18 @@ class BaseElement:
     def click(self, retries=3, wait_time=2):
         while retries > 0:
             try:
-                element = WebDriverWait(self.driver, 20).until(EC.element_to_be_clickable(self.locator))
+                element = WebDriverWait(self.driver, 30).until(EC.element_to_be_clickable(self.locator))
                 element.click()
                 return None
-            except StaleElementReferenceException:
+            except (StaleElementReferenceException, TimeoutException):
                 retries -= 1
-                time.sleep(wait_time)
-                # Wait for the element to be present again before retrying
-                WebDriverWait(self.driver, 20).until(EC.presence_of_element_located(self.locator))
-        raise StaleElementReferenceException("Element not found even after retries.")
+                if retries == 0:
+                    raise Exception(f"Element with locator {self.locator} could not be clicked after retries.")
+                time.sleep(wait_time)  # Wait before retrying
+                WebDriverWait(self.driver, 30).until(EC.presence_of_element_located(self.locator))
 
     def is_selected(self):
-        element = WebDriverWait(self.driver, 20).until(EC.visibility_of_element_located(locator=self.locator))
+        element = WebDriverWait(self.driver, 30).until(EC.visibility_of_element_located(locator=self.locator))
         self.web_element = element
         return element.is_selected()
 
@@ -75,19 +89,29 @@ class BaseElement:
     @property
     def get_text(self):
         assert self.web_element
-        # Check if the element is an input or textarea and get its value
-        if self.web_element.tag_name in ["input", "textarea"]:
-            return self.web_element.get_attribute("value")
-        else:
-            return self.web_element.text
+        # Retry logic in case of StaleElementReferenceException or TimeoutException
+        retries = 3
+        while retries > 0:
+            try:
+                # Check if the element is an input or textarea and get its value
+                if self.web_element.tag_name in ["input", "textarea"]:
+                    return self.web_element.get_attribute("value")
+                else:
+                    return self.web_element.text
+            except (StaleElementReferenceException, TimeoutException):
+                retries -= 1
+                if retries == 0:
+                    raise Exception(f"Could not get text from element {self.locator} after retries.")
+                time.sleep(2)  # Wait before retrying
+                WebDriverWait(self.driver, 30).until(EC.presence_of_element_located(self.locator))
 
     def is_displayed(self):
-        element = WebDriverWait(self.driver, 20).until(EC.visibility_of_element_located(self.locator))
+        element = WebDriverWait(self.driver, 30).until(EC.visibility_of_element_located(self.locator))
         self.web_element = element
         return element.is_displayed()
 
     def is_enabled(self):
-        element = WebDriverWait(self.driver, 20).until(EC.visibility_of_element_located(self.locator))
+        element = WebDriverWait(self.driver, 30).until(EC.visibility_of_element_located(self.locator))
         self.web_element = element
         return element.is_enabled()
 

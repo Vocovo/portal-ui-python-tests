@@ -5,6 +5,7 @@ from pytest import mark
 from qase_client import QaseClient
 import time
 from selenium.common.exceptions import StaleElementReferenceException, TimeoutException
+import traceback
 
 
 @mark.portaluksmoketests
@@ -29,7 +30,7 @@ def test_dashboard_active_devices(driver_uk_prod_login_admin, run_id):
         # STEP 1: Load the production base URL from environment variables
         # EXPECTED RESULT: The system should load the login page at the specified base URL.
         active_controllers = hce.active_devices_title.get_text
-        assert active_controllers == "Active", "The title for active devices does not match 'Actives'"
+        assert active_controllers == "Active", "The title for active devices does not match 'Active'"
 
         # STEP 2: Retrieve the count of active controllers
         active_controllers_count = int(hce.active_devices_count.get_text)
@@ -292,15 +293,18 @@ def test_dashboard_active_controllers(driver_uk_prod_login_admin, run_id):
                                        time=int(elapsed_time))  # Use the elapsed time here
 
     except (AssertionError, StaleElementReferenceException, TimeoutException) as e:
-        # If there's an assertion error, capture the failure reason
+        # Capture the failure reason and traceback
         failure_reason = str(e)
+        stacktrace = traceback.format_exc()
+
         # Record the end time after the test completes (in case of failure)
         end_time = time.time()
         # Calculate the time taken for the test to run in seconds
         elapsed_time = end_time - start_time
 
-        # Pass the elapsed time (in seconds) to the update_test_result method
-        qase_client.update_test_result(run_id, case_id, "failed", comment=f"Test failed. Reason: {failure_reason}",
+        # Pass the elapsed time (in seconds) to the update_test_result method with the failure reason and stack trace
+        qase_client.update_test_result(run_id, case_id, "failed",
+                                       comment=f"Test failed. Reason: {failure_reason}\nStacktrace:\n{stacktrace}",
                                        time=int(elapsed_time))  # Use the elapsed time here
 
         # Re-raise the exception to ensure the test is marked as failed

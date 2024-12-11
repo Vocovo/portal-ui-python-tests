@@ -1,5 +1,9 @@
 from selenium.webdriver.common.by import By
 from base_page import BasePage
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.common.exceptions import StaleElementReferenceException, TimeoutException
+import time
 
 
 class LoginPage(BasePage):
@@ -52,6 +56,7 @@ class HomePageControllers(BasePage):
         By.XPATH,
         "//div[@data-test='vocovo-online-stat-card']//div[@class='count']"
     )
+
     active_devices_title = (
         By.XPATH,
         "//div[@data-test='vocovo-online-stat-card']"
