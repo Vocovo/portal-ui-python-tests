@@ -12,6 +12,7 @@ testrail-api = "*"
 webdriver-manager = "*"
 qaseio = "*"
 qase-pytest = "*"
+urllib3 = "<2.1.0,>=1.25.3"
 
 [dev-packages]
 black = "*"

@@ -23,16 +23,20 @@ class BaseElement:
                 self.web_element = WebDriverWait(self.driver, 30).until(
                     EC.visibility_of_element_located(self.locator)
                 )
-                return
-            except (StaleElementReferenceException, TimeoutException):
+                return self.web_element  # If found, return the element
+            except TimeoutException:
+                # Log additional info for debugging purposes
+                print(f"TimeoutException: Unable to locate element with locator {self.locator}")
                 retries -= 1
-                if retries == 0:
-                    raise Exception(f"Element with locator {self.locator} could not be found after retries.")
-                time.sleep(wait_time)  # Wait before retrying
-                # Re-attempt to find the element
-                WebDriverWait(self.driver, 30).until(
-                    EC.presence_of_element_located(self.locator)
-                )
+                time.sleep(wait_time)
+            except StaleElementReferenceException:
+                # Log for stale element
+                print(f"StaleElementReferenceException: Element with locator {self.locator} became stale.")
+                retries -= 1
+                time.sleep(wait_time)
+
+        # Raise the exception after retries if still not found
+        raise TimeoutException(f"Element with locator {self.locator} not found after {3 - retries} retries.")
 
     def clear(self):
         assert self.web_element
