@@ -778,7 +778,7 @@ def test_navigate_to_the_handsets_module_details_page_for_a_group(driver_uk_prod
 
         assert "Handsets" in handset_details.handsets_details_page_title.get_text
 
-        # Checks to make sure that the headsets details page indeed belongs to the VoCoVo Internal Group
+        # Checks to make sure that the handsets details page indeed belongs to the VoCoVo Internal Group
         time.sleep(3)
         online_handsets = handset_details.online_count.get_text
         offline_handsets = handset_details.offline_count.get_text
