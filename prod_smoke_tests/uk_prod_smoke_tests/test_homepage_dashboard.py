@@ -12,7 +12,7 @@ import traceback
 @mark.regression
 @mark.testcaseid("PST-1")
 def test_dashboard_active_devices(driver_uk_prod_login_admin, run_id):
-    """The system should display the active devices count correctly."""
+    """Verify that "Active" controllers are being shown on the dashboard"""
 
     hce = HomePageControllers(driver_uk_prod_login_admin)
     failure_reason = None  # Initialize failure_reason to None

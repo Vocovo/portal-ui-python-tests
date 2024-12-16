@@ -10,7 +10,6 @@ from selenium.common.exceptions import StaleElementReferenceException, TimeoutEx
 @mark.portaluksmoketests
 @mark.regression
 @mark.testcaseid("PST-6")
-@mark.workingon
 def test_filtering_by_group_internal_vocovo(driver_uk_prod_login_admin, run_id):
     """Verify that filtering works by selecting a group (Vocovo Internal)"""
 
@@ -256,7 +255,7 @@ def test_filtering_by_group_internal_vocovo_inactive_controllers(driver_uk_prod_
 @mark.portaluksmoketests
 @mark.regression
 @mark.testcaseid("PST-20")
-def test_filtering_by_group_internal_vocovo_inactive_controllers(driver_uk_prod_login_admin, run_id):
+def test_filtering_by_group_internal_vocovo_fault_controllers(driver_uk_prod_login_admin, run_id):
     """After filtering by selecting a group the "Fault" controllers belonging
     to that group are being shown on the dashboard"""
 
@@ -511,8 +510,7 @@ def test_filtering_by_group_internal_vocovo_headset_modal(driver_uk_prod_login_a
 @mark.regression
 @mark.testcaseid("PST-23")
 def test_navigate_to_the_headsets_module_details_page_for_a_group(driver_uk_prod_login_admin, run_id):
-    """Verify that the headsets module displays all necessary data for the
-    selected group (online, offline, offline for more than 30 days, and unknown)"""
+    """Verify that clicking on the headsets module will redirect the user to the headsets details page for that group"""
 
     # Record the start time before the test begins
     start_time = time.time()
@@ -571,6 +569,15 @@ def test_navigate_to_the_headsets_module_details_page_for_a_group(driver_uk_prod
 
         assert "Headsets" in headset_details.headsets_details_page_title.get_text
 
+        if vocovo_internal_page_online_headsets == "-":
+            vocovo_internal_page_online_headsets = "0"
+        if vocovo_internal_page_offline_headsets == "-":
+            vocovo_internal_page_offline_headsets = "0"
+        if vocovo_internal_page_offline_30_days == "-":
+            vocovo_internal_page_offline_30_days = "0"
+        if vocovo_internal_page_unknown_headsets == "-":
+            vocovo_internal_page_unknown_headsets = "0"
+
         # Checks to make sure that the headsets details page indeed belongs to the VoCoVo Internal Group
         time.sleep(3)
         online_headsets = headset_details.online_count.get_text
@@ -580,12 +587,7 @@ def test_navigate_to_the_headsets_module_details_page_for_a_group(driver_uk_prod
 
         assert vocovo_internal_page_online_headsets == online_headsets
         assert vocovo_internal_page_offline_headsets == offline_headsets
-
-        # Annoying if else block because on the dashboard if the count is 0 we show - and messes up the test
-        if vocovo_internal_page_offline_30_days == "-":
-            pass
-        else:
-            assert vocovo_internal_page_offline_30_days == offline_for_more
+        assert vocovo_internal_page_offline_30_days == offline_for_more
         assert vocovo_internal_page_unknown_headsets == unknown_headsets
 
         # Record the end time after the test completes
@@ -617,7 +619,8 @@ def test_navigate_to_the_headsets_module_details_page_for_a_group(driver_uk_prod
 @mark.regression
 @mark.testcaseid("PST-24")
 def test_filtering_by_group_internal_vocovo_handsets_modal(driver_uk_prod_login_admin, run_id):
-    """Verify that clicking on the handsets module will redirect the user to the handsets details page for that group"""
+    """Verify that the handsets module displays all necessary data for the selected group
+    (online, offline, offline for more than 30 days, and unknown)"""
 
     homepage = HomePage(driver_uk_prod_login_admin)
     handsets = HomePageHandsetsModal(driver_uk_prod_login_admin)
@@ -708,8 +711,7 @@ def test_filtering_by_group_internal_vocovo_handsets_modal(driver_uk_prod_login_
 @mark.regression
 @mark.testcaseid("PST-25")
 def test_navigate_to_the_handsets_module_details_page_for_a_group(driver_uk_prod_login_admin, run_id):
-    """Verify that the headsets module displays all necessary data for the
-    selected group (online, offline, offline for more than 30 days, and unknown)"""
+    """Verify that clicking on the handsets module will redirect the user to the handsets details page for that group"""
 
     # Record the start time before the test begins
     start_time = time.time()
@@ -819,8 +821,8 @@ def test_navigate_to_the_handsets_module_details_page_for_a_group(driver_uk_prod
 @mark.regression
 @mark.testcaseid("PST-26")
 def test_filtering_by_group_internal_vocovo_callpoints_modal(driver_uk_prod_login_admin, run_id):
-    """Verify that clicking on the call points module will
-    redirect the user to the handsets details page for that group"""
+    """Verify that the call points module displays all necessary data for the
+    selected group (online, offline, offline for more than 30 days, and unknown)"""
 
     homepage = HomePage(driver_uk_prod_login_admin)
     callpoints = HomePageCallPointsModal(driver_uk_prod_login_admin)
@@ -923,8 +925,8 @@ def test_filtering_by_group_internal_vocovo_callpoints_modal(driver_uk_prod_logi
 @mark.regression
 @mark.testcaseid("PST-27")
 def test_navigate_to_the_callpoints_module_details_page_for_a_group(driver_uk_prod_login_admin, run_id):
-    """Verify that the call points module displays all necessary data for the
-    selected group (online, offline, offline for more than 30 days, and unknown)"""
+    """Verify that clicking on the call points module will redirect
+    the user to the headsets details page for that group"""
     # Record the start time before the test begins
     start_time = time.time()
 
@@ -1036,9 +1038,9 @@ def test_navigate_to_the_callpoints_module_details_page_for_a_group(driver_uk_pr
 @mark.portaluksmoketests
 @mark.regression
 @mark.testcaseid("PST-28")
-def test_filtering_by_group_internal_vocovo_callpoints_modal(driver_uk_prod_login_admin, run_id):
-    """Verify that clicking on the keypads module will
-    redirect the user to the handsets details page for that group"""
+def test_filtering_by_group_internal_vocovo_keypads_modal(driver_uk_prod_login_admin, run_id):
+    """Verify that the keypads module displays all necessary data for the
+    selected group (online, offline, offline for more than 30 days, and unknown)"""
 
     homepage = HomePage(driver_uk_prod_login_admin)
     keypads = HomePageKeyPadsModal(driver_uk_prod_login_admin)
@@ -1137,9 +1139,8 @@ def test_filtering_by_group_internal_vocovo_callpoints_modal(driver_uk_prod_logi
 @mark.portaluksmoketests
 @mark.regression
 @mark.testcaseid("PST-29")
-def test_navigate_to_the_callpoints_module_details_page_for_a_group(driver_uk_prod_login_admin, run_id):
-    """Verify that the keypads module displays all necessary data for the
-    selected group (online, offline, offline for more than 30 days, and unknown)"""
+def test_navigate_to_the_keypads_module_details_page_for_a_group(driver_uk_prod_login_admin, run_id):
+    """Verify that clicking on the keypads module will redirect the user to the headsets details page for that group"""
     # Record the start time before the test begins
     start_time = time.time()
 
