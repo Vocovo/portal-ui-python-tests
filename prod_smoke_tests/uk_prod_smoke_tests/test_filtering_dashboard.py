@@ -9,7 +9,7 @@ from selenium.common.exceptions import StaleElementReferenceException, TimeoutEx
 
 @mark.portaluksmoketests
 @mark.regression
-@mark.testcaseid("PST-6")
+@mark.testcaseid("CE-1965")
 def test_filtering_by_group_internal_vocovo(driver_uk_prod_login_admin, run_id):
     """Verify that filtering works by selecting a group (Vocovo Internal)"""
 
@@ -21,7 +21,7 @@ def test_filtering_by_group_internal_vocovo(driver_uk_prod_login_admin, run_id):
     # Record the start time before the test begins
     start_time = time.time()
 
-    case_id = int("PST-6".split('-')[1])
+    case_id = int("CE-1965".split('-')[1])
 
     # Initialize elapsed_time with a default value
     elapsed_time = None
@@ -90,7 +90,7 @@ def test_filtering_by_group_internal_vocovo(driver_uk_prod_login_admin, run_id):
 
 @mark.portaluksmoketests
 @mark.regression
-@mark.testcaseid("PST-18")
+@mark.testcaseid("CE-1977")
 def test_filtering_by_group_internal_vocovo_active_controllers(driver_uk_prod_login_admin, run_id):
     """After filtering by selecting a group the "Active" controllers belonging
     to that group are being shown on the dashboard"""
@@ -103,7 +103,7 @@ def test_filtering_by_group_internal_vocovo_active_controllers(driver_uk_prod_lo
     # Record the start time before the test begins
     start_time = time.time()
 
-    case_id = int("PST-18".split('-')[1])
+    case_id = int("CE-1977".split('-')[1])
 
     # Initialize elapsed_time with a default value
     elapsed_time = None
@@ -172,7 +172,7 @@ def test_filtering_by_group_internal_vocovo_active_controllers(driver_uk_prod_lo
 
 @mark.portaluksmoketests
 @mark.regression
-@mark.testcaseid("PST-19")
+@mark.testcaseid("CE-1978")
 def test_filtering_by_group_internal_vocovo_inactive_controllers(driver_uk_prod_login_admin, run_id):
     """After filtering by selecting a group the "Inactive"
     controllers belonging to that group are being shown on the dashboard"""
@@ -185,7 +185,7 @@ def test_filtering_by_group_internal_vocovo_inactive_controllers(driver_uk_prod_
     # Record the start time before the test begins
     start_time = time.time()
 
-    case_id = int("PST-19".split('-')[1])
+    case_id = int("CE-1978".split('-')[1])
 
     # Initialize elapsed_time with a default value
     elapsed_time = None
@@ -254,7 +254,7 @@ def test_filtering_by_group_internal_vocovo_inactive_controllers(driver_uk_prod_
 
 @mark.portaluksmoketests
 @mark.regression
-@mark.testcaseid("PST-20")
+@mark.testcaseid("CE-1979")
 def test_filtering_by_group_internal_vocovo_fault_controllers(driver_uk_prod_login_admin, run_id):
     """After filtering by selecting a group the "Fault" controllers belonging
     to that group are being shown on the dashboard"""
@@ -267,7 +267,7 @@ def test_filtering_by_group_internal_vocovo_fault_controllers(driver_uk_prod_log
     # Record the start time before the test begins
     start_time = time.time()
 
-    case_id = int("PST-20".split('-')[1])
+    case_id = int("CE-1979".split('-')[1])
 
     # Initialize elapsed_time with a default value
     elapsed_time = None
@@ -335,7 +335,7 @@ def test_filtering_by_group_internal_vocovo_fault_controllers(driver_uk_prod_log
     
 @mark.portaluksmoketests
 @mark.regression
-@mark.testcaseid("PST-21")
+@mark.testcaseid("CE-1980")
 def test_filtering_by_group_internal_vocovo_unknown_status_controllers(driver_uk_prod_login_admin, run_id):
     """After filtering by selecting a group the "Unknown status" controllers are being displayed on the dashboard"""
 
@@ -347,7 +347,7 @@ def test_filtering_by_group_internal_vocovo_unknown_status_controllers(driver_uk
     # Record the start time before the test begins
     start_time = time.time()
 
-    case_id = int("PST-21".split('-')[1])
+    case_id = int("CE-1980".split('-')[1])
 
     # Initialize elapsed_time with a default value
     elapsed_time = None
@@ -416,7 +416,7 @@ def test_filtering_by_group_internal_vocovo_unknown_status_controllers(driver_uk
 
 @mark.portaluksmoketests
 @mark.regression
-@mark.testcaseid("PST-22")
+@mark.testcaseid("CE-1981")
 def test_filtering_by_group_internal_vocovo_headset_modal(driver_uk_prod_login_admin, run_id):
     """Verify that the headsets module displays all necessary data for the
     selected group (online, offline, offline for more than 30 days, and unknown)"""
@@ -430,7 +430,7 @@ def test_filtering_by_group_internal_vocovo_headset_modal(driver_uk_prod_login_a
     # Record the start time before the test begins
     start_time = time.time()
 
-    case_id = int("PST-22".split('-')[1])
+    case_id = int("CE-1981".split('-')[1])
 
     # Initialize elapsed_time with a default value
     elapsed_time = None
@@ -508,7 +508,7 @@ def test_filtering_by_group_internal_vocovo_headset_modal(driver_uk_prod_login_a
 
 @mark.portaluksmoketests
 @mark.regression
-@mark.testcaseid("PST-23")
+@mark.testcaseid("CE-1982")
 def test_navigate_to_the_headsets_module_details_page_for_a_group(driver_uk_prod_login_admin, run_id):
     """Verify that clicking on the headsets module will redirect the user to the headsets details page for that group"""
 
@@ -528,7 +528,7 @@ def test_navigate_to_the_headsets_module_details_page_for_a_group(driver_uk_prod
     default_page_offline_30_days = hphm.long_offline_count.get_text
     default_page_unknown_headsets = hphm.unknown_count.get_text
 
-    case_id = int("PST-23".split('-')[1])
+    case_id = int("CE-1982".split('-')[1])
 
     # Initialize elapsed_time with a default value
     elapsed_time = None
@@ -617,7 +617,7 @@ def test_navigate_to_the_headsets_module_details_page_for_a_group(driver_uk_prod
 
 @mark.portaluksmoketests
 @mark.regression
-@mark.testcaseid("PST-24")
+@mark.testcaseid("CE-1983")
 def test_filtering_by_group_internal_vocovo_handsets_modal(driver_uk_prod_login_admin, run_id):
     """Verify that the handsets module displays all necessary data for the selected group
     (online, offline, offline for more than 30 days, and unknown)"""
@@ -631,7 +631,7 @@ def test_filtering_by_group_internal_vocovo_handsets_modal(driver_uk_prod_login_
     # Record the start time before the test begins
     start_time = time.time()
 
-    case_id = int("PST-24".split('-')[1])
+    case_id = int("CE-1983".split('-')[1])
 
     # Initialize elapsed_time with a default value
     elapsed_time = None
@@ -709,7 +709,7 @@ def test_filtering_by_group_internal_vocovo_handsets_modal(driver_uk_prod_login_
 
 @mark.portaluksmoketests
 @mark.regression
-@mark.testcaseid("PST-25")
+@mark.testcaseid("CE-1984")
 def test_navigate_to_the_handsets_module_details_page_for_a_group(driver_uk_prod_login_admin, run_id):
     """Verify that clicking on the handsets module will redirect the user to the handsets details page for that group"""
 
@@ -729,7 +729,7 @@ def test_navigate_to_the_handsets_module_details_page_for_a_group(driver_uk_prod
     default_page_offline_30_days = handsetshomepage.long_offline_count.get_text
     default_page_unknown_handsets = handsetshomepage.unknown_count.get_text
 
-    case_id = int("PST-25".split('-')[1])
+    case_id = int("CE-1984".split('-')[1])
 
     # Initialize elapsed_time with a default value
     elapsed_time = None
@@ -819,7 +819,7 @@ def test_navigate_to_the_handsets_module_details_page_for_a_group(driver_uk_prod
 
 @mark.portaluksmoketests
 @mark.regression
-@mark.testcaseid("PST-26")
+@mark.testcaseid("CE-1985")
 def test_filtering_by_group_internal_vocovo_callpoints_modal(driver_uk_prod_login_admin, run_id):
     """Verify that the call points module displays all necessary data for the
     selected group (online, offline, offline for more than 30 days, and unknown)"""
@@ -833,7 +833,7 @@ def test_filtering_by_group_internal_vocovo_callpoints_modal(driver_uk_prod_logi
     # Record the start time before the test begins
     start_time = time.time()
 
-    case_id = int("PST-26".split('-')[1])
+    case_id = int("CE-1985".split('-')[1])
 
     # Initialize elapsed_time with a default value
     elapsed_time = None
@@ -923,7 +923,7 @@ def test_filtering_by_group_internal_vocovo_callpoints_modal(driver_uk_prod_logi
 
 @mark.portaluksmoketests
 @mark.regression
-@mark.testcaseid("PST-27")
+@mark.testcaseid("CE-1986")
 def test_navigate_to_the_callpoints_module_details_page_for_a_group(driver_uk_prod_login_admin, run_id):
     """Verify that clicking on the call points module will redirect
     the user to the headsets details page for that group"""
@@ -943,7 +943,7 @@ def test_navigate_to_the_callpoints_module_details_page_for_a_group(driver_uk_pr
     default_page_offline_30_days = callpoointshome.long_offline_count.get_text
     default_page_unknown_callpoints = callpoointshome.unknown_count.get_text
 
-    case_id = int("PST-27".split('-')[1])
+    case_id = int("CE-1986".split('-')[1])
 
     # Initialize elapsed_time with a default value
     elapsed_time = None
@@ -1037,7 +1037,7 @@ def test_navigate_to_the_callpoints_module_details_page_for_a_group(driver_uk_pr
 
 @mark.portaluksmoketests
 @mark.regression
-@mark.testcaseid("PST-28")
+@mark.testcaseid("CE-1987")
 def test_filtering_by_group_internal_vocovo_keypads_modal(driver_uk_prod_login_admin, run_id):
     """Verify that the keypads module displays all necessary data for the
     selected group (online, offline, offline for more than 30 days, and unknown)"""
@@ -1062,7 +1062,7 @@ def test_filtering_by_group_internal_vocovo_keypads_modal(driver_uk_prod_login_a
     # Record the start time before the test begins
     start_time = time.time()
 
-    case_id = int("PST-28".split('-')[1])
+    case_id = int("CE-1987".split('-')[1])
 
     # Initialize elapsed_time with a default value
     elapsed_time = None
@@ -1138,7 +1138,7 @@ def test_filtering_by_group_internal_vocovo_keypads_modal(driver_uk_prod_login_a
 
 @mark.portaluksmoketests
 @mark.regression
-@mark.testcaseid("PST-29")
+@mark.testcaseid("CE-1988")
 def test_navigate_to_the_keypads_module_details_page_for_a_group(driver_uk_prod_login_admin, run_id):
     """Verify that clicking on the keypads module will redirect the user to the headsets details page for that group"""
     # Record the start time before the test begins
@@ -1157,7 +1157,7 @@ def test_navigate_to_the_keypads_module_details_page_for_a_group(driver_uk_prod_
     default_page_offline_30_days = keypadshome.long_offline_count.get_text
     default_page_unknown_keypads = keypadshome.unknown_count.get_text
 
-    case_id = int("PST-29".split('-')[1])
+    case_id = int("CE-1988".split('-')[1])
 
     # Initialize elapsed_time with a default value
     elapsed_time = None

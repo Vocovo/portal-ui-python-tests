@@ -8,7 +8,7 @@ from selenium.common.exceptions import StaleElementReferenceException, TimeoutEx
 
 @mark.portaluksmoketests
 @mark.regression
-@mark.testcaseid("PST-7")
+@mark.testcaseid("CE-1966")
 def test_user_login(driver, run_id):
     """The user should be able to log in successfully using valid credentials and access the portal."""
 
@@ -19,7 +19,7 @@ def test_user_login(driver, run_id):
     # Record the start time before the test begins
     start_time = time.time()
 
-    case_id = int("PST-7".split('-')[1])  # Extract case ID from marker
+    case_id = int("CE-1966".split('-')[1])  # Extract case ID from marker
 
     # Initialize elapsed_time with a default value
     elapsed_time = None
@@ -85,7 +85,7 @@ def test_user_login(driver, run_id):
 
 @mark.portaluksmoketests
 @mark.regression
-@mark.testcaseid("PST-8")
+@mark.testcaseid("CE-1967")
 def test_user_negative_login_attempt(driver, run_id):
     """The system should display an appropriate error message when invalid credentials are used."""
 
@@ -96,7 +96,7 @@ def test_user_negative_login_attempt(driver, run_id):
     # Record the start time before the test begins
     start_time = time.time()
 
-    case_id = int("PST-8".split('-')[1])  # Extract case ID from marker
+    case_id = int("CE-1967".split('-')[1])  # Extract case ID from marker
 
     # Initialize elapsed_time with a default value
     elapsed_time = None
@@ -169,7 +169,7 @@ def test_user_negative_login_attempt(driver, run_id):
 
 @mark.portaluksmoketests
 @mark.regression
-@mark.testcaseid("PST-9")
+@mark.testcaseid("CE-1968")
 def test_user_forgot_password(driver, run_id):
     """The user is able to access the 'forgot password' page and reset their password."""
 
@@ -180,7 +180,7 @@ def test_user_forgot_password(driver, run_id):
     # Record the start time before the test begins
     start_time = time.time()
 
-    case_id = int("PST-9".split('-')[1])  # Extract case ID from marker
+    case_id = int("CE-1968".split('-')[1])  # Extract case ID from marker
 
     # Initialize elapsed_time with a default value
     elapsed_time = None

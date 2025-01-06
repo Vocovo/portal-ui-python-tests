@@ -10,7 +10,7 @@ import traceback
 
 @mark.portaluksmoketests
 @mark.regression
-@mark.testcaseid("PST-1")
+@mark.testcaseid("CE-1960")
 def test_dashboard_active_devices(driver_uk_prod_login_admin, run_id):
     """Verify that "Active" controllers are being shown on the dashboard"""
 
@@ -21,7 +21,7 @@ def test_dashboard_active_devices(driver_uk_prod_login_admin, run_id):
     # Record the start time before the test begins
     start_time = time.time()
 
-    case_id = int("PST-1".split('-')[1])
+    case_id = int("CE-1960".split('-')[1])
 
     # Initialize elapsed_time with a default value
     elapsed_time = None
@@ -60,7 +60,7 @@ def test_dashboard_active_devices(driver_uk_prod_login_admin, run_id):
 
 @mark.portaluksmoketests
 @mark.regression
-@mark.testcaseid("PST-2")
+@mark.testcaseid("CE-1961")
 def test_dashboard_inactive_devices(driver_uk_prod_login_admin, run_id):
     """Verify that "Inactive" controllers are being shown on the dashboard"""
 
@@ -71,7 +71,7 @@ def test_dashboard_inactive_devices(driver_uk_prod_login_admin, run_id):
     # Record the start time before the test begins
     start_time = time.time()
 
-    case_id = int("PST-2".split('-')[1])
+    case_id = int("CE-1961".split('-')[1])
 
     # Initialize elapsed_time with a default value
     elapsed_time = None
@@ -122,7 +122,7 @@ def test_dashboard_inactive_devices(driver_uk_prod_login_admin, run_id):
 
 @mark.portaluksmoketests
 @mark.regression
-@mark.testcaseid("PST-3")
+@mark.testcaseid("CE-1962")
 def test_dashboard_fault_devices(driver_uk_prod_login_admin, run_id):
     """Verify that "Fault" controllers are being displayed on the dashboard"""
 
@@ -133,7 +133,7 @@ def test_dashboard_fault_devices(driver_uk_prod_login_admin, run_id):
     # Record the start time before the test begins
     start_time = time.time()
 
-    case_id = int("PST-3".split('-')[1])
+    case_id = int("CE-1962".split('-')[1])
 
     # Initialize elapsed_time with a default value
     elapsed_time = None
@@ -184,7 +184,7 @@ def test_dashboard_fault_devices(driver_uk_prod_login_admin, run_id):
 
 @mark.portaluksmoketests
 @mark.regression
-@mark.testcaseid("PST-4")
+@mark.testcaseid("CE-1963")
 def test_dashboard_unknown_status(driver_uk_prod_login_admin, run_id):
     """Verify that "Unknown status" controllers are being displayed on the dashboard"""
 
@@ -196,7 +196,7 @@ def test_dashboard_unknown_status(driver_uk_prod_login_admin, run_id):
     # Record the start time before the test begins
     start_time = time.time()
 
-    case_id = int("PST-4".split('-')[1])
+    case_id = int("CE-1963".split('-')[1])
 
     # Initialize elapsed_time with a default value
     elapsed_time = None
@@ -247,7 +247,7 @@ def test_dashboard_unknown_status(driver_uk_prod_login_admin, run_id):
 
 @mark.portaluksmoketests
 @mark.regression
-@mark.testcaseid("PST-5")
+@mark.testcaseid("CE-1964")
 def test_dashboard_active_controllers(driver_uk_prod_login_admin, run_id):
     """Verify that the "Active" controllers number is higher than 10K"""
 
@@ -259,7 +259,7 @@ def test_dashboard_active_controllers(driver_uk_prod_login_admin, run_id):
     # Record the start time before the test begins
     start_time = time.time()
 
-    case_id = int("PST-5".split('-')[1])
+    case_id = int("CE-1964".split('-')[1])
 
     # Initialize elapsed_time with a default value
     elapsed_time = None
@@ -314,7 +314,7 @@ def test_dashboard_active_controllers(driver_uk_prod_login_admin, run_id):
 # HOMEPAGE DASHBOARD -> DEVICES -> HEADSETS
 @mark.portaluksmoketests
 @mark.regression
-@mark.testcaseid("PST-10")
+@mark.testcaseid("CE-1969")
 def test_dashboard_headsets(driver_uk_prod_login_admin, run_id):
     """Verify that the headsets module displays all necessary data
     (online, offline, offline for more than 30 days, and unknown)."""
@@ -334,7 +334,7 @@ def test_dashboard_headsets(driver_uk_prod_login_admin, run_id):
     # Record the start time before the test begins
     start_time = time.time()
 
-    case_id = int("PST-10".split('-')[1])
+    case_id = int("CE-1969".split('-')[1])
 
     # Initialize elapsed_time with a default value
     elapsed_time = None
@@ -385,7 +385,7 @@ def test_dashboard_headsets(driver_uk_prod_login_admin, run_id):
 
 @mark.portaluksmoketests
 @mark.regression
-@mark.testcaseid("PST-11")
+@mark.testcaseid("CE-1970")
 def test_navigate_to_headsets_details_page_from_dashboard(driver_uk_prod_login_admin, run_id):
     """Verify that the user is able to click on the "Headsets" section,
     and they get redirected to the Headsets details page."""
@@ -399,7 +399,7 @@ def test_navigate_to_headsets_details_page_from_dashboard(driver_uk_prod_login_a
     # Record the start time before the test begins
     start_time = time.time()
 
-    case_id = int("PST-11".split('-')[1])
+    case_id = int("CE-1970".split('-')[1])
 
     # Initialize elapsed_time with a default value
     elapsed_time = None
@@ -445,7 +445,7 @@ def test_navigate_to_headsets_details_page_from_dashboard(driver_uk_prod_login_a
 # HOMEPAGE DASHBOARD -> DEVICES -> HANDSETS
 @mark.portaluksmoketests
 @mark.regression
-@mark.testcaseid("PST-12")
+@mark.testcaseid("CE-1971")
 def test_dashboard_handsets(driver_uk_prod_login_admin, run_id):
     """Verify that the handsets module displays all necessary data
     (online, offline, offline for more than 30 days, and unknown)."""
@@ -459,7 +459,7 @@ def test_dashboard_handsets(driver_uk_prod_login_admin, run_id):
     # Record the start time before the test begins
     start_time = time.time()
 
-    case_id = int("PST-12".split('-')[1])  # Extract case ID from marker
+    case_id = int("CE-1971".split('-')[1])  # Extract case ID from marker
 
     # Initialize elapsed_time with a default value
     elapsed_time = None
@@ -512,7 +512,7 @@ def test_dashboard_handsets(driver_uk_prod_login_admin, run_id):
 
 @mark.portaluksmoketests
 @mark.regression
-@mark.testcaseid("PST-13")
+@mark.testcaseid("CE-1972")
 def test_navigate_to_handsets_details_page_from_dashboard(driver_uk_prod_login_admin, run_id):
     """Verify that the user is able to click on the "Headsets" section,
     and they get redirected to the Handsets details page."""
@@ -527,7 +527,7 @@ def test_navigate_to_handsets_details_page_from_dashboard(driver_uk_prod_login_a
     # Record the start time before the test begins
     start_time = time.time()
 
-    case_id = int("PST-13".split('-')[1])  # Extract case ID from marker
+    case_id = int("CE-1972".split('-')[1])  # Extract case ID from marker
 
     # Initialize elapsed_time with a default value
     elapsed_time = None
@@ -574,7 +574,7 @@ def test_navigate_to_handsets_details_page_from_dashboard(driver_uk_prod_login_a
 # HOMEPAGE DASHBOARD -> DEVICES -> CALL POINTS
 @mark.portaluksmoketests
 @mark.regression
-@mark.testcaseid("PST-14")
+@mark.testcaseid("CE-1973")
 def test_dashboard_callpoints(driver_uk_prod_login_admin, run_id):
     """Verify that the call points module displays all necessary data
     (online, offline, offline for more than 30 days, and unknown)."""
@@ -588,7 +588,7 @@ def test_dashboard_callpoints(driver_uk_prod_login_admin, run_id):
     # Record the start time before the test begins
     start_time = time.time()
 
-    case_id = int("PST-14".split('-')[1])  # Extract case ID from marker
+    case_id = int("CE-1973".split('-')[1])  # Extract case ID from marker
 
     # Initialize elapsed_time with a default value
     elapsed_time = None
@@ -641,7 +641,7 @@ def test_dashboard_callpoints(driver_uk_prod_login_admin, run_id):
 
 @mark.portaluksmoketests
 @mark.regression
-@mark.testcaseid("PST-15")
+@mark.testcaseid("CE-1974")
 def test_navigate_to_callpoints_details_page_from_dashboard(driver_uk_prod_login_admin, run_id):
     """Verify that the user is able to click on the "Call Points" section,
     and they get redirected to the Call Points details page."""
@@ -656,7 +656,7 @@ def test_navigate_to_callpoints_details_page_from_dashboard(driver_uk_prod_login
     # Record the start time before the test begins
     start_time = time.time()
 
-    case_id = int("PST-15".split('-')[1])  # Extract case ID from marker
+    case_id = int("CE-1974".split('-')[1])  # Extract case ID from marker
 
     # Initialize elapsed_time with a default value
     elapsed_time = None
@@ -704,7 +704,7 @@ def test_navigate_to_callpoints_details_page_from_dashboard(driver_uk_prod_login
 # HOMEPAGE DASHBOARD -> DEVICES -> KEYPADS
 @mark.portaluksmoketests
 @mark.regression
-@mark.testcaseid("PST-16")
+@mark.testcaseid("CE-1975")
 def test_dashboard_keypads(driver_uk_prod_login_admin, run_id):
     """Verify that the keypads module displays all necessary data
     (online, offline, offline for more than 30 days, and unknown)."""
@@ -722,7 +722,7 @@ def test_dashboard_keypads(driver_uk_prod_login_admin, run_id):
     # Record the start time before the test begins
     start_time = time.time()
 
-    case_id = int("PST-16".split('-')[1])  # Extract case ID from marker
+    case_id = int("CE-1975".split('-')[1])  # Extract case ID from marker
 
     # Initialize elapsed_time with a default value
     elapsed_time = None
@@ -774,7 +774,7 @@ def test_dashboard_keypads(driver_uk_prod_login_admin, run_id):
 
 @mark.portaluksmoketests
 @mark.regression
-@mark.testcaseid("PST-17")
+@mark.testcaseid("CE-1976")
 def test_navigate_to_keypads_details_page_from_dashboard(driver_uk_prod_login_admin, run_id):
     """Verify that the user is able to click on the "Keypads"
     section, and they get redirected to the Keypads details page"""
@@ -789,7 +789,7 @@ def test_navigate_to_keypads_details_page_from_dashboard(driver_uk_prod_login_ad
     # Record the start time before the test begins
     start_time = time.time()
 
-    case_id = int("PST-17".split('-')[1])  # Extract case ID from marker
+    case_id = int("CE-1976".split('-')[1])  # Extract case ID from marker
 
     # Initialize elapsed_time with a default value
     elapsed_time = None
