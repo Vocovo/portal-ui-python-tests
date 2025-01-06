@@ -618,6 +618,7 @@ def test_navigate_to_the_headsets_module_details_page_for_a_group(driver_uk_prod
 @mark.portaluksmoketests
 @mark.regression
 @mark.testcaseid("CE-1983")
+@mark.workingon
 def test_filtering_by_group_internal_vocovo_handsets_modal(driver_uk_prod_login_admin, run_id):
     """Verify that the handsets module displays all necessary data for the selected group
     (online, offline, offline for more than 30 days, and unknown)"""
