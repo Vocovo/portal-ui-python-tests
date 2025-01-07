@@ -1,10 +1,8 @@
-from base_element import BaseElement
 from selenium.webdriver.common.by import By
 from locator import Locator
-
+from base_element import BaseElement
 
 class BasePage:
-
     def __init_subclass__(cls) -> None:
         for key, value in cls.__dict__.items():
             if key.startswith("_"):
@@ -13,15 +11,17 @@ class BasePage:
                 continue
             if key in BasePage.__dict__:
                 continue
-            if not isinstance(value, (str, tuple)):
+            if not isinstance(value, (str, tuple, list)):
                 continue
             if isinstance(value, str):
-                value = (By.XPATH, value)
+                value = [(By.XPATH, value)]
+            elif isinstance(value, tuple):
+                value = [value]
 
             @property
             def accessor(self, value=value):
-                locator = Locator(*value)
-                return BaseElement(driver=self.driver, locator=locator)
+                locators = [Locator(*v) for v in value]
+                return BaseElement(driver=self.driver, locators=locators)
 
             setattr(cls, key, accessor)
 
