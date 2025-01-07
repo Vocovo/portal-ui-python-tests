@@ -4,246 +4,118 @@ from qase_client import QaseClient
 import time
 import os
 from selenium.common.exceptions import StaleElementReferenceException, TimeoutException
+from conftest import qase_test
 
 
 @mark.portaluksmoketests
 @mark.regression
 @mark.testcaseid("CE-1966")
+@qase_test(case_id=1966)  # Use the decorator for Qase integration
 def test_user_login(driver, run_id):
-    """The user should be able to log in successfully using valid credentials and access the portal."""
+    """
+    Verify that the user can log in successfully using valid credentials and access the portal.
+    """
 
-    # Initialize failure_reason to None and Qase client
-    failure_reason = None
-    qase_client = QaseClient()
+    # Initialize page objects
+    login_page = LoginPage(driver=driver)
+    home_page = HomePage(driver=driver)
 
-    # Record the start time before the test begins
-    start_time = time.time()
+    # STEP 1: Navigate to the production base URL
+    base_url = os.getenv("PROD_UK_BASE_URL")
+    driver.get(base_url)
 
-    case_id = int("CE-1966".split('-')[1])  # Extract case ID from marker
+    # STEP 2: Input valid email and password into the login fields
+    login_page.input_email_field.input_text(os.getenv("ADMIN_USERNAME"))
+    login_page.input_password_field.input_text(os.getenv("ADMIN_PASSWORD"))
 
-    # Initialize elapsed_time with a default value
-    elapsed_time = None
+    # STEP 3: Submit the login form
+    login_page.login_button.click()
 
-    try:
-        # STEP 1: Load the production base URL from environment variables
-        # EXPECTED RESULT: The system should load the login page at the specified base URL.
-        base_url = os.getenv("PROD_UK_BASE_URL")
-        driver.get(base_url)
+    # STEP 4: Verify that the profile avatar is displayed, indicating successful login
+    assert home_page.avatar_logo_button.is_displayed(), \
+        "Profile avatar not found, login may have failed."
 
-        # STEP 2: Navigate to the login page
-        # EXPECTED RESULT: The login page should load successfully.
-        login_page = LoginPage(driver=driver)
-        home_page = HomePage(driver=driver)
+    # STEP 5: Open the profile menu
+    home_page.avatar_logo_button.click()
 
-        # STEP 3: Input valid email and password into the login fields
-        # EXPECTED RESULT: The email and password fields should accept the inputs.
-        login_page.input_email_field.input_text(os.getenv("ADMIN_USERNAME"))
-        login_page.input_password_field.input_text(os.getenv("ADMIN_PASSWORD"))
-
-        # STEP 4: Click the login button to submit the login form
-        # EXPECTED RESULT: The system should authenticate the user and redirect to the home page.
-        login_page.login_button.click()
-
-        # STEP 5: Verify that the profile avatar or another identifying element is displayed
-        # EXPECTED RESULT: The profile avatar should be visible, indicating that the user is logged in successfully.
-        assert home_page.avatar_logo_button.is_displayed(), "Profile avatar not found, login may have failed"
-
-        # STEP 6: Click on the avatar logo to open the profile menu
-        # EXPECTED RESULT: The profile menu should open, allowing access to profile options.
-        home_page.avatar_logo_button.click()
-
-        # STEP 7: Verify that the profile menu item is displayed
-        # EXPECTED RESULT: The profile menu should be visible, allowing the user to access profile-related settings.
-        assert home_page.profile_menu_item.is_displayed(), "Profile menu item is not displayed"
-
-        # Record the end time after the test completes
-        end_time = time.time()
-        # Calculate the time taken for the test to run in seconds
-        elapsed_time = end_time - start_time
-
-        # Pass the elapsed time (in seconds) to the Qase update_test_result method
-        qase_client.update_test_result(run_id, case_id, "passed", comment="Test completed successfully",
-                                       time=int(elapsed_time))  # Use the elapsed time here
-
-    except (AssertionError, StaleElementReferenceException, TimeoutException) as e:
-        # If there's an assertion error, capture the failure reason
-        failure_reason = str(e)
-
-        # Record the end time after the test completes (in case of failure)
-        end_time = time.time()
-
-        # Calculate the time taken for the test to run in seconds
-        elapsed_time = end_time - start_time
-
-        # Pass the elapsed time (in seconds) to the Qase update_test_result method with "failed" status
-        qase_client.update_test_result(run_id, case_id, "failed", comment=f"Test failed. Reason: {failure_reason}",
-                                       time=int(elapsed_time))
-
-        # Re-raise the exception to ensure the test is marked as failed
-        raise
+    # STEP 6: Verify that the profile menu item is displayed
+    assert home_page.profile_menu_item.is_displayed(), \
+        "Profile menu item is not displayed, indicating profile menu did not open."
 
 
 @mark.portaluksmoketests
 @mark.regression
 @mark.testcaseid("CE-1967")
+@qase_test(case_id=1967)  # Use the decorator for Qase integration
 def test_user_negative_login_attempt(driver, run_id):
-    """The system should display an appropriate error message when invalid credentials are used."""
+    """
+    Verify that the system displays an appropriate error message when invalid credentials are used.
+    """
 
-    # Initialize failure_reason to None and Qase client
-    failure_reason = None
-    qase_client = QaseClient()
+    # Initialize page objects
+    login_page = LoginPage(driver=driver)
 
-    # Record the start time before the test begins
-    start_time = time.time()
+    # Define the expected error message
+    expected_error_message = "Invalid username or password. Ensure your account is verified."
 
-    case_id = int("CE-1967".split('-')[1])  # Extract case ID from marker
+    # STEP 1: Navigate to the production base URL
+    base_url = os.getenv("PROD_UK_BASE_URL")
+    driver.get(base_url)
 
-    # Initialize elapsed_time with a default value
-    elapsed_time = None
+    # STEP 2: Input the user's email and an invalid password
+    login_page.input_email_field.input_text(os.getenv("ADMIN_USERNAME"))
+    login_page.input_password_field.input_text("wrongpasswordforsure")
 
-    try:
-        login_failed_text = "Invalid username or password. Ensure your account is verified."
+    # STEP 3: Submit the login form
+    login_page.login_button.click()
 
-        # STEP 1: Load the production base URL from environment variables
-        # EXPECTED RESULT: The system should load the login page at the specified base URL.
-        base_url = os.getenv("PROD_UK_BASE_URL")
+    # STEP 4: Verify that the error message is displayed
+    assert login_page.login_error_message.is_displayed(), \
+        "The error message is not displayed; login might have succeeded unexpectedly."
 
-        # STEP 2: Navigate the browser to the login page using the base URL
-        # EXPECTED RESULT: The login page should load successfully.
-        driver.get(base_url)
-
-        # STEP 3: Initialize the LoginPage object to interact with the login page elements
-        # EXPECTED RESULT: The LoginPage object should be initialized
-        # successfully, allowing interaction with the login elements.
-        login_page = LoginPage(driver=driver)
-
-        # STEP 4: Input the user's email from environment variables into the email field
-        # EXPECTED RESULT: The email field should accept and display the provided email address.
-        login_page.input_email_field.input_text(os.getenv("ADMIN_USERNAME"))
-
-        # STEP 5: Input an invalid password into the password field to simulate a failed login attempt
-        # EXPECTED RESULT: The password field should accept and display the provided invalid password.
-        login_page.input_password_field.input_text("wrongpasswordforsure")
-
-        # STEP 6: Click on the login button to submit the login form
-        # EXPECTED RESULT: The system should attempt to authenticate the user and display an error message.
-        login_page.login_button.click()
-
-        # STEP 7: Verify that an error message is displayed after the failed login attempt
-        # EXPECTED RESULT: The error message should be visible, indicating that the login attempt failed.
-        assert login_page.login_error_message.is_displayed(), ("The error message is not displayed; "
-                                                               "login might have succeeded unexpectedly.")
-
-        # STEP 8: Verify that the displayed error message matches the expected message for invalid credentials
-        # EXPECTED RESULT: The error message text should exactly match
-        # "Invalid username or password. Ensure your account is verified."
-        assert login_page.login_error_message.get_text == login_failed_text, ("The error message text does "
-                                                                              "not match the expected message.")
-
-        # Record the end time after the test completes
-        end_time = time.time()
-        # Calculate the time taken for the test to run in seconds
-        elapsed_time = end_time - start_time
-
-        # Pass the elapsed time (in seconds) to the Qase update_test_result method
-        qase_client.update_test_result(run_id, case_id, "passed", comment="Test completed successfully",
-                                       time=int(elapsed_time))  # Use the elapsed time here
-
-    except (AssertionError, StaleElementReferenceException, TimeoutException) as e:
-        # If there's an assertion error, capture the failure reason
-        failure_reason = str(e)
-
-        # Record the end time after the test completes (in case of failure)
-        end_time = time.time()
-
-        # Calculate the time taken for the test to run in seconds
-        elapsed_time = end_time - start_time
-
-        # Pass the elapsed time (in seconds) to the Qase update_test_result method with "failed" status
-        qase_client.update_test_result(run_id, case_id, "failed", comment=f"Test failed. Reason: {failure_reason}",
-                                       time=int(elapsed_time))
-
-        # Re-raise the exception to ensure the test is marked as failed
-        raise
+    # STEP 5: Verify that the displayed error message matches the expected message
+    actual_error_message = login_page.login_error_message.get_text
+    assert actual_error_message == expected_error_message, \
+        f"Expected error message '{expected_error_message}', but got '{actual_error_message}'."
 
 
 @mark.portaluksmoketests
 @mark.regression
 @mark.testcaseid("CE-1968")
+@qase_test(case_id=1968)  # Use the decorator for Qase integration
 def test_user_forgot_password(driver, run_id):
-    """The user is able to access the 'forgot password' page and reset their password."""
+    """
+    Verify that the user can access the 'forgot password' page and successfully request a password reset.
+    """
 
-    # Initialize failure_reason to None and Qase client
-    failure_reason = None
-    qase_client = QaseClient()
+    # Initialize page objects
+    login_page = LoginPage(driver=driver)
+    forgot_password_page = ForgotPassword(driver=driver)
 
-    # Record the start time before the test begins
-    start_time = time.time()
+    # Define expected messages
+    expected_forgot_password_text = "Request password reset"
+    expected_success_message = "Request successful"
+    expected_info_message = (
+        "Request successful. You should receive an email with further instructions shortly (usually within 30 seconds)."
+    )
 
-    case_id = int("CE-1968".split('-')[1])  # Extract case ID from marker
+    # STEP 1: Navigate to the production base URL
+    base_url = os.getenv("PROD_UK_BASE_URL")
+    driver.get(base_url)
 
-    # Initialize elapsed_time with a default value
-    elapsed_time = None
+    # STEP 2: Click the "Forgot password" link
+    login_page.forgot_password_link.click()
+    assert forgot_password_page.title_text.get_text == expected_forgot_password_text, \
+        "Did not navigate to the 'Request password reset' page."
 
-    try:
-        forgot_password_text = "Request password reset"
-        request_successful_message = "Request successful"
-        info_message = ("Request successful. You should receive an email with "
-                        "further instructions shortly (usually within 30 seconds).")
+    # STEP 3: Enter the email address for password reset
+    forgot_password_page.email_field.input_text("qa-testing@vocovo.com")
 
-        # STEP 1: Load the production base URL from environment variables
-        # EXPECTED RESULT: The system should load the login page at the specified base URL.
-        base_url = os.getenv("PROD_UK_BASE_URL")
-        driver.get(base_url)
+    # STEP 4: Click the "Request reset" button and verify the success message
+    forgot_password_page.request_reset_button.click()
+    assert forgot_password_page.request_successful_message.get_text == expected_success_message, \
+        "Request successful message not displayed."
 
-        # STEP 2: Navigate to the login page
-        # EXPECTED RESULT: The login page should load successfully.
-        login_page = LoginPage(driver=driver)
-        forgot_password_page = ForgotPassword(driver=driver)
-
-        # STEP 3: Click the "forgot password" link
-        # EXPECTED RESULT: The "Request password reset" page should be displayed.
-        login_page.forgot_password_link.click()
-        assert forgot_password_page.title_text.get_text == forgot_password_text, \
-            "Did not navigate to the 'Request password reset' page."
-
-        # STEP 4: Enter the email address for password reset
-        # EXPECTED RESULT: The email input field should accept the user's email address.
-        forgot_password_page.email_field.input_text("qa-testing@vocovo.com")
-
-        # STEP 5: Click the "Request reset" button
-        # EXPECTED RESULT: The system should display the "Request successful" message.
-        forgot_password_page.request_reset_button.click()
-        assert forgot_password_page.request_successful_message.get_text == request_successful_message, \
-            "Request successful message not displayed."
-
-        # STEP 6: Verify the success info message
-        # EXPECTED RESULT: The system should display the additional
-        # information message indicating that an email has been sent.
-        assert forgot_password_page.info_message.get_text == info_message, "Information message not displayed as expected."
-
-        # Record the end time after the test completes
-        end_time = time.time()
-        # Calculate the time taken for the test to run in seconds
-        elapsed_time = end_time - start_time
-
-        # Pass the elapsed time (in seconds) to the Qase update_test_result method
-        qase_client.update_test_result(run_id, case_id, "passed", comment="Test completed successfully",
-                                       time=int(elapsed_time))  # Use the elapsed time here
-
-    except (AssertionError, StaleElementReferenceException, TimeoutException) as e:
-        # If there's an assertion error, capture the failure reason
-        failure_reason = str(e)
-
-        # Record the end time after the test completes (in case of failure)
-        end_time = time.time()
-
-        # Calculate the time taken for the test to run in seconds
-        elapsed_time = end_time - start_time
-
-        # Pass the elapsed time (in seconds) to the Qase update_test_result method with "failed" status
-        qase_client.update_test_result(run_id, case_id, "failed", comment=f"Test failed. Reason: {failure_reason}",
-                                       time=int(elapsed_time))
-
-        # Re-raise the exception to ensure the test is marked as failed
-        raise
+    # STEP 5: Verify the additional information message
+    assert forgot_password_page.info_message.get_text == expected_info_message, \
+        "Information message not displayed as expected."

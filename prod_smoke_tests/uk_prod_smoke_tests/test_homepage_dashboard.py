@@ -6,324 +6,142 @@ from qase_client import QaseClient
 import time
 from selenium.common.exceptions import StaleElementReferenceException, TimeoutException
 import traceback
+from conftest import sanitize_count
+from conftest import qase_test
 
 
 @mark.portaluksmoketests
 @mark.regression
 @mark.testcaseid("CE-1960")
+@mark.workingon
+@qase_test(case_id=1960)  # Use the decorator for Qase integration
 def test_dashboard_active_devices(driver_uk_prod_login_admin, run_id):
-    """Verify that "Active" controllers are being shown on the dashboard"""
+    """
+    Verify that "Active" controllers are being shown on the dashboard.
+    """
 
+    # Initialize page objects
     hce = HomePageControllers(driver_uk_prod_login_admin)
-    failure_reason = None  # Initialize failure_reason to None
-    qase_client = QaseClient()  # Initialize the Qase client
 
-    # Record the start time before the test begins
-    start_time = time.time()
+    # STEP 1: Verify the title for active devices
+    active_controllers_title = hce.active_devices_title.get_text
+    assert active_controllers_title == "Active", \
+        f"The title for active devices does not match 'Active' (found: '{active_controllers_title}')."
 
-    case_id = int("CE-1960".split('-')[1])
-
-    # Initialize elapsed_time with a default value
-    elapsed_time = None
-
-    try:
-        # STEP 1: Load the production base URL from environment variables
-        # EXPECTED RESULT: The system should load the login page at the specified base URL.
-        active_controllers = hce.active_devices_title.get_text
-        assert active_controllers == "Active", "The title for active devices does not match 'Active'"
-
-        # STEP 2: Retrieve the count of active controllers
-        active_controllers_count = int(hce.active_devices_count.get_text)
-        assert active_controllers_count > 0, "The count of active devices should be greater than 0."
-        # Record the end time after the test completes
-        end_time = time.time()
-        # Calculate the time taken for the test to run in seconds
-        elapsed_time = end_time - start_time
-        # Pass the elapsed time (in seconds) to the update_test_result method
-        qase_client.update_test_result(run_id, case_id, "passed", comment="Test completed successfully",
-                                       time=int(elapsed_time))
-
-    except (AssertionError, StaleElementReferenceException, TimeoutException) as e:
-        # If there's an assertion error, capture the failure reason
-        failure_reason = str(e)
-        # Record the end time after the test completes (in case of failure)
-        end_time = time.time()
-        # Calculate the time taken for the test to run in seconds
-        elapsed_time = end_time - start_time
-        # Pass the elapsed time (in seconds) to the update_test_result method
-        qase_client.update_test_result(run_id, case_id, "failed", comment=f"Test failed. Reason: {failure_reason}",
-                                       time=int(elapsed_time))
-
-        # Re-raise the exception to ensure the test is marked as failed
-        raise
+    # STEP 2: Retrieve and validate the count of active controllers
+    active_controllers_count = sanitize_count(hce.active_devices_count.get_text)
+    assert active_controllers_count > 0, \
+        f"The count of active devices should be greater than 0 (found: {active_controllers_count})."
 
 
 @mark.portaluksmoketests
 @mark.regression
 @mark.testcaseid("CE-1961")
+@qase_test(case_id=1961)  # Use the decorator for Qase integration
 def test_dashboard_inactive_devices(driver_uk_prod_login_admin, run_id):
-    """Verify that "Inactive" controllers are being shown on the dashboard"""
+    """
+    Verify that "Inactive" controllers are being shown on the dashboard.
+    """
 
+    # Initialize page objects
     hce = HomePageControllers(driver_uk_prod_login_admin)
-    failure_reason = None  # Initialize failure_reason to None
-    qase_client = QaseClient()  # Initialize the Qase client
 
-    # Record the start time before the test begins
-    start_time = time.time()
+    # STEP 1: Verify the title for inactive devices
+    inactive_controllers_title = hce.inactive_devices_title.get_text
+    assert inactive_controllers_title == "Inactive", \
+        f"Expected 'Inactive', but got '{inactive_controllers_title}'."
 
-    case_id = int("CE-1961".split('-')[1])
-
-    # Initialize elapsed_time with a default value
-    elapsed_time = None
-
-    try:
-        # STEP 1: Load the production base URL from environment variables
-        # EXPECTED RESULT: The system should load the login page at the specified base URL.
-        # (This step is implicitly handled by the `driver_uk_prod_login_admin` fixture)
-
-        # STEP 2: Retrieve the "Inactive Devices" title text from the dashboard
-        # EXPECTED RESULT: The text should match "Inactive".
-        inactive_controllers_title = hce.inactive_devices_title.get_text
-        assert inactive_controllers_title == "Inactive", (
-            f"Expected 'Inactive', but got '{inactive_controllers_title}'"
-        )
-
-        # STEP 3: Retrieve the count of inactive devices from the dashboard
-        # EXPECTED RESULT: The count should be greater than zero.
-        inactive_controllers_count = int(hce.inactive_devices_count.get_text)
-        assert inactive_controllers_count > 0, (
-            f"Expected inactive devices count to be greater than 0, but got {inactive_controllers_count}"
-        )
-
-        # Record the end time after the test completes
-        end_time = time.time()
-        # Calculate the time taken for the test to run in seconds
-        elapsed_time = end_time - start_time
-
-        # Pass the elapsed time (in seconds) to the update_test_result method
-        qase_client.update_test_result(run_id, case_id, "passed", comment="Test completed successfully",
-                                       time=int(elapsed_time))  # Use the elapsed time here
-
-    except (AssertionError, StaleElementReferenceException, TimeoutException) as e:
-        # If there's an assertion error, capture the failure reason
-        failure_reason = str(e)
-        # Record the end time after the test completes (in case of failure)
-        end_time = time.time()
-        # Calculate the time taken for the test to run in seconds
-        elapsed_time = end_time - start_time
-
-        # Pass the elapsed time (in seconds) to the update_test_result method
-        qase_client.update_test_result(run_id, case_id, "failed", comment=f"Test failed. Reason: {failure_reason}",
-                                       time=int(elapsed_time))  # Use the elapsed time here
-
-        # Re-raise the exception to ensure the test is marked as failed
-        raise
+    # STEP 2: Retrieve and validate the count of inactive controllers
+    inactive_controllers_count = sanitize_count(hce.inactive_devices_count.get_text)
+    assert inactive_controllers_count > 0, \
+        f"Expected inactive devices count to be greater than 0, but got {inactive_controllers_count}."
 
 
 @mark.portaluksmoketests
 @mark.regression
 @mark.testcaseid("CE-1962")
+@qase_test(case_id=1962)  # Use the decorator for Qase integration
 def test_dashboard_fault_devices(driver_uk_prod_login_admin, run_id):
-    """Verify that "Fault" controllers are being displayed on the dashboard"""
+    """
+    Verify that "Fault" controllers are being displayed on the dashboard.
+    """
 
+    # Initialize page objects
     hce = HomePageControllers(driver_uk_prod_login_admin)
-    failure_reason = None  # Initialize failure_reason to None
-    qase_client = QaseClient()  # Initialize the Qase client
 
-    # Record the start time before the test begins
-    start_time = time.time()
+    # STEP 1: Verify the title for fault devices
+    fault_devices_title = hce.fault_devices_title.get_text
+    assert fault_devices_title == "Fault", \
+        f"Expected 'Fault', but got '{fault_devices_title}'."
 
-    case_id = int("CE-1962".split('-')[1])
-
-    # Initialize elapsed_time with a default value
-    elapsed_time = None
-
-    try:
-        # STEP 1: Load the production base URL from environment variables
-        # EXPECTED RESULT: The system should load the login page at the specified base URL.
-        # (This step is implicitly handled by the `driver_uk_prod_login_admin` fixture)
-
-        # STEP 2: Retrieve the "Fault" title text from the dashboard
-        # EXPECTED RESULT: The text should match "Fault".
-        fault_devices_title = hce.fault_devices_title.get_text
-        assert fault_devices_title == "Fault", (
-            f"Expected 'Fault', but got '{fault_devices_title}'"
-        )
-
-        # STEP 3: Retrieve the count of fault devices from the dashboard
-        # EXPECTED RESULT: The count should be greater than zero.
-        fault_devices_count = int(hce.fault_devices_count.get_text)
-        assert fault_devices_count > 0, (
-            f"Expected fault devices count to be greater than 0, but got {fault_devices_count}"
-        )
-
-        # Record the end time after the test completes
-        end_time = time.time()
-        # Calculate the time taken for the test to run in seconds
-        elapsed_time = end_time - start_time
-
-        # Pass the elapsed time (in seconds) to the update_test_result method
-        qase_client.update_test_result(run_id, case_id, "passed", comment="Test completed successfully",
-                                       time=int(elapsed_time))  # Use the elapsed time here
-
-    except (AssertionError, StaleElementReferenceException, TimeoutException) as e:
-        # If there's an assertion error, capture the failure reason
-        failure_reason = str(e)
-        # Record the end time after the test completes (in case of failure)
-        end_time = time.time()
-        # Calculate the time taken for the test to run in seconds
-        elapsed_time = end_time - start_time
-
-        # Pass the elapsed time (in seconds) to the update_test_result method
-        qase_client.update_test_result(run_id, case_id, "failed", comment=f"Test failed. Reason: {failure_reason}",
-                                       time=int(elapsed_time))  # Use the elapsed time here
-
-        # Re-raise the exception to ensure the test is marked as failed
-        raise
+    # STEP 2: Retrieve and validate the count of fault devices
+    fault_devices_count = sanitize_count(hce.fault_devices_count.get_text)
+    assert fault_devices_count > 0, \
+        f"Expected fault devices count to be greater than 0, but got {fault_devices_count}."
 
 
 @mark.portaluksmoketests
 @mark.regression
 @mark.testcaseid("CE-1963")
+@qase_test(case_id=1963)  # Use the decorator for Qase integration
 def test_dashboard_unknown_status(driver_uk_prod_login_admin, run_id):
-    """Verify that "Unknown status" controllers are being displayed on the dashboard"""
+    """
+    Verify that "Unknown status" controllers are being displayed on the dashboard.
+    """
 
-    # TEST CASE ID = 279452
+    # Initialize page objects
     hce = HomePageControllers(driver_uk_prod_login_admin)
-    failure_reason = None  # Initialize failure_reason to None
-    qase_client = QaseClient()  # Initialize the Qase client
 
-    # Record the start time before the test begins
-    start_time = time.time()
+    # STEP 1: Verify the label for "Unknown status" devices
+    unknown_status_label = hce.unknown_status_devices_title.get_text
+    assert unknown_status_label == "Unknown status", \
+        "The label for 'Unknown status' is incorrect or not displayed."
 
-    case_id = int("CE-1963".split('-')[1])
-
-    # Initialize elapsed_time with a default value
-    elapsed_time = None
-
-    try:
-        # STEP 1: Load the production base URL from environment variables
-        # EXPECTED RESULT: The system should load the login page at the specified base URL.
-        # (Handled by the driver fixture)
-
-        # STEP 2: Retrieve the text for the "Unknown status" label
-        # EXPECTED RESULT: The label "Unknown status" should be displayed on the dashboard.
-        unknown_status_label = hce.unknown_status_devices_title.get_text
-        assert unknown_status_label == "Unknown status", (
-            "The label for 'Unknown status' is incorrect or not displayed."
-        )
-
-        # STEP 3: Retrieve the count of devices with "Unknown status"
-        # EXPECTED RESULT: The count should be a positive integer greater than 0.
-        unknown_status_count = int(hce.unknown_status_devices_count.get_text)
-        assert unknown_status_count > 0, (
-            f"The count of 'Unknown status' devices is {unknown_status_count}, which is not greater than 0."
-        )
-
-        # Record the end time after the test completes
-        end_time = time.time()
-        # Calculate the time taken for the test to run in seconds
-        elapsed_time = end_time - start_time
-
-        # Pass the elapsed time (in seconds) to the update_test_result method
-        qase_client.update_test_result(run_id, case_id, "passed", comment="Test completed successfully",
-                                       time=int(elapsed_time))  # Use the elapsed time here
-
-    except (AssertionError, StaleElementReferenceException, TimeoutException) as e:
-        # If there's an assertion error, capture the failure reason
-        failure_reason = str(e)
-        # Record the end time after the test completes (in case of failure)
-        end_time = time.time()
-        # Calculate the time taken for the test to run in seconds
-        elapsed_time = end_time - start_time
-
-        # Pass the elapsed time (in seconds) to the update_test_result method
-        qase_client.update_test_result(run_id, case_id, "failed", comment=f"Test failed. Reason: {failure_reason}",
-                                       time=int(elapsed_time))  # Use the elapsed time here
-
-        # Re-raise the exception to ensure the test is marked as failed
-        raise
+    # STEP 2: Retrieve and validate the count of "Unknown status" devices
+    unknown_status_count = sanitize_count(hce.unknown_status_devices_count.get_text)
+    assert unknown_status_count > 0, \
+        f"The count of 'Unknown status' devices is {unknown_status_count}, which is not greater than 0."
 
 
 @mark.portaluksmoketests
 @mark.regression
 @mark.testcaseid("CE-1964")
+@qase_test(case_id=1964)  # Use the decorator for Qase integration
 def test_dashboard_active_controllers(driver_uk_prod_login_admin, run_id):
-    """Verify that the "Active" controllers number is higher than 10K"""
+    """
+    Verify that the "Active" controllers number is higher than 10K.
+    """
 
-    # TEST CASE ID = 279453
+    # Initialize page objects
     hce = HomePageControllers(driver_uk_prod_login_admin)
-    failure_reason = None  # Initialize failure_reason to None
-    qase_client = QaseClient()  # Initialize the Qase client
 
-    # Record the start time before the test begins
-    start_time = time.time()
+    # STEP 1: Verify the title for active controllers
+    active_controllers_title = hce.active_devices_title.get_text
+    assert active_controllers_title == "Active", \
+        f"Expected 'Active', but got '{active_controllers_title}'."
 
-    case_id = int("CE-1964".split('-')[1])
-
-    # Initialize elapsed_time with a default value
-    elapsed_time = None
-
-    try:
-        # STEP 1: Load the production base URL from environment variables
-        # EXPECTED RESULT: The system should load the login page at the specified base URL.
-        # (Handled by the driver fixture)
-
-        # STEP 2: Retrieve the "Active" controllers title text from the dashboard
-        # EXPECTED RESULT: The text should match "Active".
-        active_controllers_title = hce.active_devices_title.get_text
-        assert active_controllers_title == "Active", (
-            f"Expected 'Active', but got '{active_controllers_title}'"
-        )
-
-        # STEP 3: Retrieve the count of active controllers from the dashboard
-        # EXPECTED RESULT: The count should be greater than 10,000.
-        active_controllers_count = int(hce.active_devices_count.get_text)
-        assert active_controllers_count > 10000, (
-            f"Expected active controllers count to be greater than 10,000, but got {active_controllers_count}"
-        )
-
-        # Record the end time after the test completes
-        end_time = time.time()
-        # Calculate the time taken for the test to run in seconds
-        elapsed_time = end_time - start_time
-
-        # Pass the elapsed time (in seconds) to the update_test_result method
-        qase_client.update_test_result(run_id, case_id, "passed", comment="Test completed successfully",
-                                       time=int(elapsed_time))  # Use the elapsed time here
-
-    except (AssertionError, StaleElementReferenceException, TimeoutException) as e:
-        # Capture the failure reason and traceback
-        failure_reason = str(e)
-        stacktrace = traceback.format_exc()
-
-        # Record the end time after the test completes (in case of failure)
-        end_time = time.time()
-        # Calculate the time taken for the test to run in seconds
-        elapsed_time = end_time - start_time
-
-        # Pass the elapsed time (in seconds) to the update_test_result method with the failure reason and stack trace
-        qase_client.update_test_result(run_id, case_id, "failed",
-                                       comment=f"Test failed. Reason: {failure_reason}\nStacktrace:\n{stacktrace}",
-                                       time=int(elapsed_time))  # Use the elapsed time here
-
-        # Re-raise the exception to ensure the test is marked as failed
-        raise
+    # STEP 2: Retrieve and validate the count of active controllers
+    active_controllers_count = sanitize_count(hce.active_devices_count.get_text)
+    assert active_controllers_count > 10000, \
+        f"Expected active controllers count to be greater than 10,000, but got {active_controllers_count}."
 
 
 # HOMEPAGE DASHBOARD -> DEVICES -> HEADSETS
 @mark.portaluksmoketests
 @mark.regression
 @mark.testcaseid("CE-1969")
+@qase_test(case_id=1969)  # Use the decorator for Qase integration
+@mark.workingon
 def test_dashboard_headsets(driver_uk_prod_login_admin, run_id):
-    """Verify that the headsets module displays all necessary data
-    (online, offline, offline for more than 30 days, and unknown)."""
+    """
+    Verify that the headsets module displays all necessary data
+    (online, offline, offline for more than 30 days, and unknown).
+    """
 
+    # Initialize page objects
     hm = HomePageHeadsetsModal(driver_uk_prod_login_admin)
-    failure_reason = None  # Initialize failure_reason to None
-    qase_client = QaseClient()  # Initialize the Qase client
 
-    # Define the expected labels and add descriptive error messages for each assertion
+    # Define the expected labels and associate them with corresponding elements
     labels_and_counts = {
         "online": ("Online", hm.online_label, hm.online_count),
         "offline": ("Offline", hm.offline_label, hm.offline_count),
@@ -331,139 +149,63 @@ def test_dashboard_headsets(driver_uk_prod_login_admin, run_id):
         "unknown": ("Unknown", hm.unknown_label, hm.unknown_count)
     }
 
-    # Record the start time before the test begins
-    start_time = time.time()
+    # Verify each label and count dynamically
+    for label_name, (expected_text, label_element, count_element) in labels_and_counts.items():
+        # Verify that the label is displayed with the correct text
+        label_text = label_element.get_text
+        assert label_text == expected_text, \
+            f"Expected '{expected_text}' label for {label_name}, but got '{label_text}'."
 
-    case_id = int("CE-1969".split('-')[1])
-
-    # Initialize elapsed_time with a default value
-    elapsed_time = None
-
-    try:
-        # STEP 1: Load the production base URL from environment variables
-        # EXPECTED RESULT: The system should load the login page at the specified base URL.
-        # (This step is implicitly handled by the `driver_uk_prod_login_admin` fixture)
-
-        # Verify each label and count dynamically
-        for label_name, (expected_text, label_element, count_element) in labels_and_counts.items():
-            # STEP 2: Verify that the label is displayed with the correct text
-            # EXPECTED RESULT: The label should match the expected text.
-            assert label_element.get_text == expected_text, (
-                f"Expected '{expected_text}' label for {label_name} but got '{label_element.get_text}'"
-            )
-
-            # STEP 3: Verify that the count is greater than zero
-            # EXPECTED RESULT: The count should be a positive integer.
-            assert int(count_element.get_text) > 0, (
-                f"Expected {label_name} count to be greater than 0, but got {count_element.get_text}"
-            )
-
-        # Record the end time after the test completes
-        end_time = time.time()
-        # Calculate the time taken for the test to run in seconds
-        elapsed_time = end_time - start_time
-
-        # Pass the elapsed time (in seconds) to the update_test_result method
-        qase_client.update_test_result(run_id, case_id, "passed", comment="Test completed successfully",
-                                       time=int(elapsed_time))  # Use the elapsed time here
-
-    except (AssertionError, StaleElementReferenceException, TimeoutException) as e:
-        # If there's an assertion error, capture the failure reason
-        failure_reason = str(e)
-        # Record the end time after the test completes (in case of failure)
-        end_time = time.time()
-        # Calculate the time taken for the test to run in seconds
-        elapsed_time = end_time - start_time
-
-        # Pass the elapsed time (in seconds) to the update_test_result method
-        qase_client.update_test_result(run_id, case_id, "failed", comment=f"Test failed. Reason: {failure_reason}",
-                                       time=int(elapsed_time))  # Use the elapsed time here
-
-        # Re-raise the exception to ensure the test is marked as failed
-        raise
+        # Verify that the count is greater than zero
+        count = sanitize_count(count_element.get_text)
+        assert count > 0, \
+            f"Expected {label_name} count to be greater than 0, but got {count}."
 
 
 @mark.portaluksmoketests
 @mark.regression
 @mark.testcaseid("CE-1970")
+@qase_test(case_id=1970)  # Use the decorator for Qase integration
 def test_navigate_to_headsets_details_page_from_dashboard(driver_uk_prod_login_admin, run_id):
-    """Verify that the user is able to click on the "Headsets" section,
-    and they get redirected to the Headsets details page."""
+    """
+    Verify that the user is able to click on the "Headsets" section,
+    and they get redirected to the Headsets details page.
+    """
 
+    # Initialize page objects
     hm = HomePageHeadsetsModal(driver_uk_prod_login_admin)
     hd = HeadsetsDetailsPage(driver_uk_prod_login_admin)
 
-    failure_reason = None  # Initialize failure_reason to None
-    qase_client = QaseClient()  # Initialize the Qase client
+    # STEP 1: Click on the "Headsets" section in the modal.
+    # EXPECTED RESULT: The system should navigate to the Headsets details page.
+    hm.headsets_modal_title.click()
 
-    # Record the start time before the test begins
-    start_time = time.time()
+    # STEP 2: Verify that the Headsets details page title is displayed.
+    # EXPECTED RESULT: The Headsets details page title element should be visible.
+    assert hd.headsets_details_page_title.is_displayed(), \
+        "The Headsets details page title is not displayed."
 
-    case_id = int("CE-1970".split('-')[1])
-
-    # Initialize elapsed_time with a default value
-    elapsed_time = None
-
-    try:
-        # STEP 1: Click on the "Headsets" section in the modal.
-        # EXPECTED RESULT: The system should navigate to the Headsets details page.
-        hm.headsets_modal_title.click()
-
-        # STEP 2: Verify that the Headsets details page title is displayed.
-        # EXPECTED RESULT: The Headsets details page title element should be visible.
-        assert hd.headsets_details_page_title.is_displayed()
-
-        # STEP 3: Verify that the Headsets details page title contains the word "Headset".
-        # EXPECTED RESULT: The text of the Headsets details page title should include "Headset".
-        assert "Headset" in hd.headsets_details_page_title.get_text, "The title does not contain 'Headset'"
-
-        # Record the end time after the test completes
-        end_time = time.time()
-        # Calculate the time taken for the test to run in seconds
-        elapsed_time = end_time - start_time
-
-        # Pass the elapsed time (in seconds) to the update_test_result method
-        qase_client.update_test_result(run_id, case_id, "passed", comment="Test completed successfully",
-                                       time=int(elapsed_time))  # Use the elapsed time here
-
-    except (AssertionError, StaleElementReferenceException, TimeoutException) as e:
-        # If there's an assertion error, capture the failure reason
-        failure_reason = str(e)
-        # Record the end time after the test completes (in case of failure)
-        end_time = time.time()
-        # Calculate the time taken for the test to run in seconds
-        elapsed_time = end_time - start_time
-
-        # Pass the elapsed time (in seconds) to the update_test_result method
-        qase_client.update_test_result(run_id, case_id, "failed", comment=f"Test failed. Reason: {failure_reason}",
-                                       time=int(elapsed_time))  # Use the elapsed time here
-
-        # Re-raise the exception to ensure the test is marked as failed
-        raise
+    # STEP 3: Verify that the Headsets details page title contains the word "Headset".
+    # EXPECTED RESULT: The text of the Headsets details page title should include "Headset".
+    assert "Headset" in hd.headsets_details_page_title.get_text, \
+        "The Headsets details page title does not contain 'Headset'."
 
 
 # HOMEPAGE DASHBOARD -> DEVICES -> HANDSETS
 @mark.portaluksmoketests
 @mark.regression
 @mark.testcaseid("CE-1971")
+@qase_test(case_id=1971)  # Use the decorator for Qase integration
 def test_dashboard_handsets(driver_uk_prod_login_admin, run_id):
-    """Verify that the handsets module displays all necessary data
-    (online, offline, offline for more than 30 days, and unknown)."""
+    """
+    Verify that the handsets module displays all necessary data
+    (online, offline, offline for more than 30 days, and unknown).
+    """
 
+    # Initialize page objects
     hndset = HomePageHandsetsModal(driver_uk_prod_login_admin)
 
-    # Initialize failure_reason to None and Qase client
-    failure_reason = None
-    qase_client = QaseClient()
-
-    # Record the start time before the test begins
-    start_time = time.time()
-
-    case_id = int("CE-1971".split('-')[1])  # Extract case ID from marker
-
-    # Initialize elapsed_time with a default value
-    elapsed_time = None
-
+    # Define expected labels and counts
     labels_and_counts = {
         "online": ("Online", hndset.online_label, hndset.online_count),
         "offline": ("Offline", hndset.offline_label, hndset.offline_count),
@@ -471,247 +213,121 @@ def test_dashboard_handsets(driver_uk_prod_login_admin, run_id):
         "unknown": ("Unknown", hndset.unknown_label, hndset.unknown_count)
     }
 
-    try:
-        # STEP 1: Verify that the label is displayed with the correct text for each status type.
-        # EXPECTED RESULT: The label should match the expected text (e.g., "Online", "Offline").
-        for label_name, (expected_text, label_element, count_element) in labels_and_counts.items():
-            assert label_element.get_text == expected_text, (
-                f"Expected '{expected_text}' label for {label_name} but got '{label_element.get_text}'"
-            )
+    # Dynamically verify labels and counts
+    for label_name, (expected_text, label_element, count_element) in labels_and_counts.items():
+        # Verify that the label is displayed with the correct text
+        label_text = label_element.get_text
+        assert label_text == expected_text, \
+            f"Expected '{expected_text}' label for {label_name}, but got '{label_text}'."
 
-            # STEP 2: Verify that the count is greater than zero for each status type.
-            # EXPECTED RESULT: The count should be a positive integer, indicating items are present for each status.
-            assert int(count_element.get_text) > 0, (
-                f"Expected {label_name} count to be greater than 0, but got {count_element.get_text}"
-            )
-
-        # Record the end time after the test completes
-        end_time = time.time()
-        # Calculate the time taken for the test to run in seconds
-        elapsed_time = end_time - start_time
-
-        # Pass the elapsed time (in seconds) to the update_test_result method
-        qase_client.update_test_result(run_id, case_id, "passed", comment="Test completed successfully",
-                                       time=int(elapsed_time))  # Use the elapsed time here
-
-    except (AssertionError, StaleElementReferenceException, TimeoutException) as e:
-        # If there's an assertion error, capture the failure reason
-        failure_reason = str(e)
-        # Record the end time after the test completes (in case of failure)
-        end_time = time.time()
-        # Calculate the time taken for the test to run in seconds
-        elapsed_time = end_time - start_time
-
-        # Pass the elapsed time (in seconds) to the update_test_result method
-        qase_client.update_test_result(run_id, case_id, "failed", comment=f"Test failed. Reason: {failure_reason}",
-                                       time=int(elapsed_time))  # Use the elapsed time here
-
-        # Re-raise the exception to ensure the test is marked as failed
-        raise
+        # Verify that the count is greater than zero
+        count = sanitize_count(count_element.get_text)
+        assert count > 0, \
+            f"Expected {label_name} count to be greater than 0, but got {count}."
 
 
 @mark.portaluksmoketests
 @mark.regression
 @mark.testcaseid("CE-1972")
+@qase_test(case_id=1972)  # Use the decorator for Qase integration
 def test_navigate_to_handsets_details_page_from_dashboard(driver_uk_prod_login_admin, run_id):
-    """Verify that the user is able to click on the "Headsets" section,
-    and they get redirected to the Handsets details page."""
+    """
+    Verify that the user is able to click on the "Handsets" section,
+    and they get redirected to the Handsets details page.
+    """
 
+    # Initialize page objects
     hm = HomePageHandsetsModal(driver_uk_prod_login_admin)
     hd = HandsetsDetailsPage(driver_uk_prod_login_admin)
 
-    # Initialize failure_reason to None and Qase client
-    failure_reason = None
-    qase_client = QaseClient()
+    # STEP 1: Click on the "Handsets" section in the modal
+    hm.handsets_modal_title.click()
 
-    # Record the start time before the test begins
-    start_time = time.time()
+    # STEP 2: Verify that the Handsets details page title is displayed
+    assert hd.handsets_details_page_title.is_displayed(), \
+        "The Handsets details page title is not displayed."
 
-    case_id = int("CE-1972".split('-')[1])  # Extract case ID from marker
-
-    # Initialize elapsed_time with a default value
-    elapsed_time = None
-
-    try:
-        # STEP 1: Click on the "Handsets" section in the modal.
-        # EXPECTED RESULT: The system should navigate to the Handsets details page.
-        hm.handsets_modal_title.click()
-
-        # STEP 2: Verify that the Handsets details page title is displayed.
-        # EXPECTED RESULT: The Handsets page title element should be visible.
-        assert hd.handsets_details_page_title.is_displayed()
-
-        # STEP 3: Verify that the Handsets page title contains the word "Handset".
-        # EXPECTED RESULT: The text of the Handsets page title should include "Handset".
-        assert "Handset" in hd.handsets_details_page_title.get_text, ("Expected to navigate to the handsets "
-                                                              "details page, navigated somewhere else instead")
-
-        # Record the end time after the test completes
-        end_time = time.time()
-        # Calculate the time taken for the test to run in seconds
-        elapsed_time = end_time - start_time
-
-        # Pass the elapsed time (in seconds) to the update_test_result method
-        qase_client.update_test_result(run_id, case_id, "passed", comment="Test completed successfully",
-                                       time=int(elapsed_time))  # Use the elapsed time here
-
-    except (AssertionError, StaleElementReferenceException, TimeoutException) as e:
-        # If there's an assertion error, capture the failure reason
-        failure_reason = str(e)
-        # Record the end time after the test completes (in case of failure)
-        end_time = time.time()
-        # Calculate the time taken for the test to run in seconds
-        elapsed_time = end_time - start_time
-
-        # Pass the elapsed time (in seconds) to the update_test_result method
-        qase_client.update_test_result(run_id, case_id, "failed", comment=f"Test failed. Reason: {failure_reason}",
-                                       time=int(elapsed_time))  # Use the elapsed time here
-
-        # Re-raise the exception to ensure the test is marked as failed
-        raise
+    # STEP 3: Verify that the Handsets page title contains the word "Handset"
+    assert "Handset" in hd.handsets_details_page_title.get_text, \
+        "Expected to navigate to the Handsets details page, but navigated elsewhere."
 
 
 # HOMEPAGE DASHBOARD -> DEVICES -> CALL POINTS
 @mark.portaluksmoketests
 @mark.regression
 @mark.testcaseid("CE-1973")
+@qase_test(case_id=1973)  # Use the decorator for Qase integration
 def test_dashboard_callpoints(driver_uk_prod_login_admin, run_id):
-    """Verify that the call points module displays all necessary data
-    (online, offline, offline for more than 30 days, and unknown)."""
+    """
+    Verify that the call points module displays all necessary data
+    (online, offline, offline for more than 30 days, and unknown).
+    """
 
+    # Initialize page objects
     callpoints = HomePageCallPointsModal(driver_uk_prod_login_admin)
 
-    # Initialize failure_reason to None and Qase client
-    failure_reason = None
-    qase_client = QaseClient()
+    # Define expected labels and counts
+    labels_and_counts = {
+        "online": ("Online", callpoints.online_label, callpoints.online_count),
+        "offline": ("Offline", callpoints.offline_label, callpoints.offline_count),
+        "long offline": ("Offline for more than 30 days", callpoints.long_offline_label, callpoints.long_offline_count),
+        "unknown": ("Unknown", callpoints.unknown_label, callpoints.unknown_count)
+    }
 
-    # Record the start time before the test begins
-    start_time = time.time()
+    # Dynamically verify labels and counts
+    for label_name, (expected_text, label_element, count_element) in labels_and_counts.items():
+        # Verify that the label is displayed with the correct text
+        label_text = label_element.get_text
+        assert label_text == expected_text, \
+            f"Expected '{expected_text}' label for {label_name}, but got '{label_text}'."
 
-    case_id = int("CE-1973".split('-')[1])  # Extract case ID from marker
-
-    # Initialize elapsed_time with a default value
-    elapsed_time = None
-
-    try:
-        labels_and_counts = {
-            "online": ("Online", callpoints.online_label, callpoints.online_count),
-            "offline": ("Offline", callpoints.offline_label, callpoints.offline_count),
-            "long offline": ("Offline for more than 30 days", callpoints.long_offline_label, callpoints.long_offline_count),
-            "unknown": ("Unknown", callpoints.unknown_label, callpoints.unknown_count)
-        }
-
-        for label_name, (expected_text, label_element, count_element) in labels_and_counts.items():
-            # STEP 1: Verify that the label is displayed with the correct text for each status type.
-            # EXPECTED RESULT: The label should match the expected text (e.g., "Online", "Offline").
-            assert label_element.get_text == expected_text, (
-                f"Expected '{expected_text}' label for {label_name} but got '{label_element.get_text}'"
-            )
-
-            # STEP 2: Verify that the count is greater than zero for each status type.
-            # EXPECTED RESULT: The count should be a positive integer, indicating items are present for each status.
-            assert int(count_element.get_text) > 0, (
-                f"Expected {label_name} count to be greater than 0, but got {count_element.get_text}"
-            )
-
-        # Record the end time after the test completes
-        end_time = time.time()
-        # Calculate the time taken for the test to run in seconds
-        elapsed_time = end_time - start_time
-
-        # Pass the elapsed time (in seconds) to the update_test_result method
-        qase_client.update_test_result(run_id, case_id, "passed", comment="Test completed successfully",
-                                       time=int(elapsed_time))  # Use the elapsed time here
-
-    except (AssertionError, StaleElementReferenceException, TimeoutException) as e:
-        # If there's an assertion error, capture the failure reason
-        failure_reason = str(e)
-        # Record the end time after the test completes (in case of failure)
-        end_time = time.time()
-        # Calculate the time taken for the test to run in seconds
-        elapsed_time = end_time - start_time
-
-        # Pass the elapsed time (in seconds) to the update_test_result method
-        qase_client.update_test_result(run_id, case_id, "failed", comment=f"Test failed. Reason: {failure_reason}",
-                                       time=int(elapsed_time))  # Use the elapsed time here
-
-        # Re-raise the exception to ensure the test is marked as failed
-        raise
+        # Verify that the count is greater than zero
+        count = sanitize_count(count_element.get_text)  # Use sanitize_count to ensure an integer
+        assert count > 0, \
+            f"Expected {label_name} count to be greater than 0, but got {count}."
 
 
 @mark.portaluksmoketests
 @mark.regression
 @mark.testcaseid("CE-1974")
+@qase_test(case_id=1974)  # Use the decorator for Qase integration
 def test_navigate_to_callpoints_details_page_from_dashboard(driver_uk_prod_login_admin, run_id):
-    """Verify that the user is able to click on the "Call Points" section,
-    and they get redirected to the Call Points details page."""
+    """
+    Verify that the user is able to click on the "Call Points" section,
+    and they get redirected to the Call Points details page.
+    """
 
+    # Initialize page objects
     cp = HomePageCallPointsModal(driver_uk_prod_login_admin)
     cd = CallPointsDetailsPage(driver_uk_prod_login_admin)
 
-    # Initialize failure_reason to None and Qase client
-    failure_reason = None
-    qase_client = QaseClient()
+    # STEP 1: Click on the "Call Points" section in the modal
+    cp.callpoints_modal_title.click()
 
-    # Record the start time before the test begins
-    start_time = time.time()
+    # STEP 2: Verify that the Call Points details page title is displayed
+    assert cd.callpoints_details_page_title.is_displayed(), \
+        "The Call Points details page title is not displayed."
 
-    case_id = int("CE-1974".split('-')[1])  # Extract case ID from marker
-
-    # Initialize elapsed_time with a default value
-    elapsed_time = None
-
-    try:
-        # STEP 1: Click on the "Call Points" section in the modal.
-        # EXPECTED RESULT: The system should navigate to the Call Points details page.
-        cp.callpoints_modal_title.click()
-
-        # STEP 2: Verify that the Call Points details page title is displayed.
-        # EXPECTED RESULT: The Call Points page title element should be visible.
-        assert cd.callpoints_details_page_title.is_displayed()
-
-        # STEP 3: Verify that the Call Points page title contains the word "Call Points".
-        # EXPECTED RESULT: The text of the Call Points page title should include "Call Points".
-        assert "Call Points" in cd.callpoints_details_page_title.get_text, (
-            "Expected to navigate to the call points details page, navigated somewhere else instead"
-        )
-
-        # Record the end time after the test completes
-        end_time = time.time()
-        # Calculate the time taken for the test to run in seconds
-        elapsed_time = end_time - start_time
-
-        # Pass the elapsed time (in seconds) to the update_test_result method
-        qase_client.update_test_result(run_id, case_id, "passed", comment="Test completed successfully",
-                                       time=int(elapsed_time))  # Use the elapsed time here
-
-    except (AssertionError, StaleElementReferenceException, TimeoutException) as e:
-        # If there's an assertion error, capture the failure reason
-        failure_reason = str(e)
-        # Record the end time after the test completes (in case of failure)
-        end_time = time.time()
-        # Calculate the time taken for the test to run in seconds
-        elapsed_time = end_time - start_time
-
-        # Pass the elapsed time (in seconds) to the update_test_result method
-        qase_client.update_test_result(run_id, case_id, "failed", comment=f"Test failed. Reason: {failure_reason}",
-                                       time=int(elapsed_time))  # Use the elapsed time here
-
-        # Re-raise the exception to ensure the test is marked as failed
-        raise
+    # STEP 3: Verify that the Call Points page title contains the word "Call Points"
+    assert "Call Points" in cd.callpoints_details_page_title.get_text, \
+        "Expected to navigate to the Call Points details page, but navigated elsewhere."
 
 
 # HOMEPAGE DASHBOARD -> DEVICES -> KEYPADS
 @mark.portaluksmoketests
 @mark.regression
 @mark.testcaseid("CE-1975")
+@qase_test(case_id=1975)  # Use the decorator for Qase integration
 def test_dashboard_keypads(driver_uk_prod_login_admin, run_id):
-    """Verify that the keypads module displays all necessary data
-    (online, offline, offline for more than 30 days, and unknown)."""
+    """
+    Verify that the keypads module displays all necessary data
+    (online, offline, offline for more than 30 days, and unknown).
+    """
 
+    # Initialize page objects
     keypads = HomePageKeyPadsModal(driver_uk_prod_login_admin)
-    qase_client = QaseClient()  # Initialize the Qase client
 
+    # Define expected labels and counts
     labels_and_counts = {
         "online": ("Online", keypads.online_label, keypads.online_count),
         "offline": ("Offline", keypads.offline_label, keypads.offline_count),
@@ -719,119 +335,43 @@ def test_dashboard_keypads(driver_uk_prod_login_admin, run_id):
         "unknown": ("Unknown", keypads.unknown_label, keypads.unknown_count)
     }
 
-    # Record the start time before the test begins
-    start_time = time.time()
+    # Dynamically verify labels and counts
+    for label_name, (expected_text, label_element, count_element) in labels_and_counts.items():
+        # Verify that the label is displayed with the correct text
+        label_text = label_element.get_text
+        assert label_text == expected_text, \
+            f"Expected '{expected_text}' label for {label_name}, but got '{label_text}'."
 
-    case_id = int("CE-1975".split('-')[1])  # Extract case ID from marker
-
-    # Initialize elapsed_time with a default value
-    elapsed_time = None
-
-    try:
-        # STEP 1: Navigate to the dashboard and login (handled by fixture)
-        # EXPECTED RESULT: The system should load the login page and navigate to the dashboard.
-
-        # STEP 2: Verify that the label is displayed with the correct text for each status type.
-        # EXPECTED RESULT: The label should match the expected text (e.g., "Online", "Offline").
-        for label_name, (expected_text, label_element, count_element) in labels_and_counts.items():
-            assert label_element.get_text == expected_text, (
-                f"Expected '{expected_text}' label for {label_name} but got '{label_element.get_text}'"
-            )
-
-            # STEP 3: Verify that the count is greater than zero for each status type.
-            # EXPECTED RESULT: The count should be a positive integer, indicating items are present for each status.
-            assert int(count_element.get_text) > 0, (
-                f"Expected {label_name} count to be greater than 0, but got {count_element.get_text}"
-            )
-
-        # Record the end time after the test completes
-        end_time = time.time()
-
-        # Calculate the time taken for the test to run in seconds
-        elapsed_time = end_time - start_time
-
-        # Pass the elapsed time (in seconds) to the Qase update_test_result method
-        qase_client.update_test_result(run_id, case_id, "passed", comment="Test completed successfully",
-                                       time=int(elapsed_time))
-
-    except (AssertionError, StaleElementReferenceException, TimeoutException) as e:
-        # If there's an assertion error, capture the failure reason
-        failure_reason = str(e)
-
-        # Record the end time after the test completes (in case of failure)
-        end_time = time.time()
-
-        # Calculate the time taken for the test to run in seconds
-        elapsed_time = end_time - start_time
-
-        # Pass the elapsed time (in seconds) to the Qase update_test_result method with "failed" status
-        qase_client.update_test_result(run_id, case_id, "failed", comment=f"Test failed. Reason: {failure_reason}",
-                                       time=int(elapsed_time))
-
-        # Re-raise the exception to ensure the test is marked as failed
-        raise
+        # Verify that the count is greater than zero
+        try:
+            count = int(count_element.get_text)  # Directly cast to int
+            assert count > 0, \
+                f"Expected {label_name} count to be greater than 0, but got {count}."
+        except ValueError:
+            raise AssertionError(f"Failed to convert {label_name} count '{count_element.get_text}' to an integer.")
 
 
 @mark.portaluksmoketests
 @mark.regression
 @mark.testcaseid("CE-1976")
+@qase_test(case_id=1976)  # Use the decorator for Qase integration
 def test_navigate_to_keypads_details_page_from_dashboard(driver_uk_prod_login_admin, run_id):
-    """Verify that the user is able to click on the "Keypads"
-    section, and they get redirected to the Keypads details page"""
+    """
+    Verify that the user is able to click on the "Keypads"
+    section, and they get redirected to the Keypads details page.
+    """
 
+    # Initialize page objects
     hmkp = HomePageKeyPadsModal(driver_uk_prod_login_admin)
     kp = KeypadsDetailsPage(driver_uk_prod_login_admin)
 
-    # Initialize failure_reason to None and Qase client
-    failure_reason = None
-    qase_client = QaseClient()
+    # STEP 1: Click on the "Keypads" section in the modal
+    hmkp.keypads_modal_title.click()
 
-    # Record the start time before the test begins
-    start_time = time.time()
+    # STEP 2: Verify that the Keypads details page title is displayed
+    assert kp.keypads_details_page_title.is_displayed(), \
+        "The Keypads details page title is not displayed."
 
-    case_id = int("CE-1976".split('-')[1])  # Extract case ID from marker
-
-    # Initialize elapsed_time with a default value
-    elapsed_time = None
-
-    try:
-        # STEP 1: Navigate to the dashboard and login (handled by fixture)
-        # EXPECTED RESULT: The system should be on the dashboard page, and the user should be logged in.
-
-        # STEP 2: Click on the "Keypads" section in the modal.
-        # EXPECTED RESULT: The system should navigate to the Keypads details page.
-        hmkp.keypads_modal_title.click()
-
-        # STEP 3: Verify that the Keypads details page title is displayed.
-        # EXPECTED RESULT: The Keypads page title element should be visible.
-        assert kp.keypads_details_page_title.is_displayed()
-
-        # STEP 4: Verify that the Keypads page title contains the word "Keypads".
-        # EXPECTED RESULT: The text of the Keypads page title should include "Keypads".
-        assert "Keypads" in kp.keypads_details_page_title.get_text, (
-            "Expected to navigate to the keypads details page, navigated somewhere else instead"
-        )
-
-        # Record the end time after the test completes
-        end_time = time.time()
-        # Calculate the time taken for the test to run in seconds
-        elapsed_time = end_time - start_time
-
-        # Pass the elapsed time (in seconds) to the update_test_result method
-        qase_client.update_test_result(run_id, case_id, "passed", comment="Test completed successfully",
-                                       time=int(elapsed_time))  # Use the elapsed time here
-
-    except (AssertionError, StaleElementReferenceException, TimeoutException) as e:
-        # If there's an assertion error, capture the failure reason
-        failure_reason = str(e)
-        # Record the end time after the test completes (in case of failure)
-        end_time = time.time()
-        # Calculate the time taken for the test to run in seconds
-        elapsed_time = end_time - start_time
-
-        # Pass the elapsed time (in seconds) to the update_test_result method
-        qase_client.update_test_result(run_id, case_id, "failed", comment=f"Test failed. Reason: {failure_reason}",
-                                       time=int(elapsed_time))  # Use the elapsed time here
-
-        # Re-raise the exception to ensure the test is marked as failed
-        raise
+    # STEP 3: Verify that the Keypads page title contains the word "Keypads"
+    assert "Keypads" in kp.keypads_details_page_title.get_text, \
+        "Expected to navigate to the Keypads details page, but navigated elsewhere."

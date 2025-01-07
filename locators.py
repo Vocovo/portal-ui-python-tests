@@ -1,9 +1,6 @@
 from selenium.webdriver.common.by import By
+
 from base_page import BasePage
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
-from selenium.common.exceptions import StaleElementReferenceException, TimeoutException
-import time
 
 
 class LoginPage(BasePage):
@@ -100,51 +97,50 @@ class HomePageControllers(BasePage):
 class HomePageHeadsetsModal(BasePage):
     offline_count = (
         By.XPATH,
-        "//div[@data-test='headset-dashboard-body']//div[contains(@class, "
-        "'data-card-info-item-offline')]//div[@class='data-card-info-item-value']"
+        "//div[contains(@class, 'data-card-info-item-offline')]//div[contains(@class, 'data-card-info-item-value')]"
     )
 
     offline_label = (
         By.XPATH,
-        "//div[@data-test='headset-dashboard-body']//span[text()='Offline']"
+        "//div[@data-test='headset-dashboard-body']//span[contains(text(), 'Offline')]"
     )
 
     long_offline_count = (
         By.XPATH,
-        "//div[@data-test='headset-dashboard-body']//div[contains(@class, "
-        "'data-card-info-item-longOffline')]//div[@class='data-card-info-item-value']"
+        "//div[@data-test='headset-dashboard-body']//div[contains(@class, 'data-card-info-item-longOffline')]"
+        "//div[contains(@class, 'data-card-info-item-value')]"
     )
 
     long_offline_label = (
         By.XPATH,
-        "//div[@data-test='headset-dashboard-body']//span[text()='Offline for more than 30 days']"
+        "//div[@data-test='headset-dashboard-body']//span[contains(text(), 'Offline for more than 30 days')]"
     )
 
     unknown_count = (
         By.XPATH,
-        "//div[@data-test='headset-dashboard-body']//div[contains(@class, "
-        "'data-card-info-item-unknown')]//div[@class='data-card-info-item-value']"
+        "//div[@data-test='headset-dashboard-body']//div[contains(@class, 'data-card-info-item-unknown')]"
+        "//div[contains(@class, 'data-card-info-item-value')]"
     )
 
     unknown_label = (
         By.XPATH,
-        "//div[@data-test='headset-dashboard-body']//span[text()='Unknown']"
+        "//div[@data-test='headset-dashboard-body']//span[contains(text(), 'Unknown')]"
     )
 
     online_count = (
         By.XPATH,
-        "//div[@data-test='headset-dashboard-body']//div[contains(@class, "
-        "'data-card-info-item-online')]//div[@class='data-card-info-item-value']"
+        "//div[@data-test='headset-dashboard-body']//div[contains(@class, 'data-card-info-item-online')]"
+        "//div[contains(@class, 'data-card-info-item-value')]"
     )
 
     online_label = (
         By.XPATH,
-        "//div[@data-test='headset-dashboard-body']//span[text()='Online']"
+        "//div[@data-test='headset-dashboard-body']//span[contains(text(), 'Online')]"
     )
 
     headsets_modal_title = (
         By.XPATH,
-        "//div[@data-test='headset-dashboard-body']//span[@class='data-card-title' and text()='Headsets']"
+        "//div[@data-test='headset-dashboard-body']//span[@class='data-card-title' and contains(text(), 'Headsets')]"
     )
 
 
