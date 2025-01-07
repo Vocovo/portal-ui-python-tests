@@ -14,14 +14,15 @@ class BasePage:
             if not isinstance(value, (str, tuple, list)):
                 continue
             if isinstance(value, str):
-                value = [(By.XPATH, value)]
+                value = [Locator(By.XPATH, value)]
             elif isinstance(value, tuple):
-                value = [value]
+                value = [Locator(*value)]
+            elif isinstance(value, list):
+                value = [Locator(*v) for v in value]
 
             @property
             def accessor(self, value=value):
-                locators = [Locator(*v) for v in value]
-                return BaseElement(driver=self.driver, locators=locators)
+                return BaseElement(driver=self.driver, locators=value)
 
             setattr(cls, key, accessor)
 

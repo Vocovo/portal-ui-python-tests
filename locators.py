@@ -154,7 +154,8 @@ class HomePageHandsetsModal(BasePage):
 
     headsets_online_count = (
         By.XPATH,
-        "//div[@data-test='handset-dashboard-body']//div[contains(@class, 'data-card-info-item-online')]//div[@class='data-card-info-item-value']"
+        "//div[@data-test='handset-dashboard-body']//div[contains(@class, 'data-card-info-item-online')]"
+        "//div[@class='data-card-info-item-value']"
     )
     online_label = (
         By.XPATH,
@@ -433,11 +434,12 @@ class CallPointsDetailsPage(BasePage):
     )
 
     # Offline for more than 30 days elements
-    long_offline_count = (
-        By.XPATH, "//div[@data-test='vocovo-longOffline-stat-card']//div[@class='count']"
-    )
+    long_offline_count = [(By.XPATH, "//div[@data-test='vocovo-longOffline-stat-card']//div[@class='count']"),
+                          (By.XPATH, "//div[contains(@class, 'vocovo-stat-card longOffline')]//div[@class='count']")]
+
     long_offline_label = (
-        By.XPATH, "//div[@data-test='vocovo-longOffline-stat-card']//div[@class='card-title' and text()='Offline for more than 30 days']"
+        By.XPATH, "//div[@data-test='vocovo-longOffline-stat-card']"
+                  "//div[@class='card-title' and text()='Offline for more than 30 days']"
     )
 
     # Unknown elements
@@ -491,9 +493,11 @@ class KeypadsDetailsPage(BasePage):
     )
 
     # Unknown elements
-    unknown_count = (
-        By.XPATH, "//div[@data-test='vocovo-unknown-stat-card']//div[@class='count']"
-    )
+    unknown_count = [
+        (By.XPATH, "//div[@data-test='vocovo-unknown-stat-card']//div[@class='count']"),
+        (By.XPATH, "//div[@class='vocovo-stat-card unknown']//div[@class='count']")
+    ]
+
     unknown_label = (
         By.XPATH, "//div[@data-test='vocovo-unknown-stat-card']//div[@class='card-title' and text()='Unknown']"
     )

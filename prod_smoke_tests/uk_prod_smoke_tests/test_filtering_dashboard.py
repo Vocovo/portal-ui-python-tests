@@ -227,7 +227,6 @@ def test_filtering_by_group_internal_vocovo_unknown_status_controllers(driver_uk
 @mark.regression
 @mark.testcaseid("CE-1981")
 @qase_test(case_id=1981)  # Use the decorator for Qase integration
-@mark.workingon
 def test_filtering_by_group_internal_vocovo_headset_modal(driver_uk_prod_login_admin, run_id):
     """
     Verify that the headsets module displays all necessary data for the
@@ -280,7 +279,6 @@ def test_filtering_by_group_internal_vocovo_headset_modal(driver_uk_prod_login_a
 @mark.regression
 @mark.testcaseid("CE-1982")
 @qase_test(case_id=1982)  # Use the decorator for Qase integration
-@mark.workingon
 def test_navigate_to_the_headsets_module_details_page_for_a_group(driver_uk_prod_login_admin, run_id):
     """
     Verify that clicking on the headsets module will redirect the user to the
@@ -521,6 +519,7 @@ def test_filtering_by_group_internal_vocovo_callpoints_modal(driver_uk_prod_logi
 @mark.regression
 @mark.testcaseid("CE-1986")
 @qase_test(case_id=1986)  # Use the decorator for Qase integration
+@mark.workingon
 def test_navigate_to_the_callpoints_module_details_page_for_a_group(driver_uk_prod_login_admin, run_id):
     """
     Verify that clicking on the call points module will redirect
@@ -639,7 +638,7 @@ def test_filtering_by_group_internal_vocovo_keypads_modal(driver_uk_prod_login_a
 @mark.portaluksmoketests
 @mark.regression
 @mark.testcaseid("CE-1988")
-@qase_test(case_id=1988)  # Use the decorator for Qase integration
+@qase_test(case_id=1988)
 def test_navigate_to_the_keypads_module_details_page_for_a_group(driver_uk_prod_login_admin, run_id):
     """
     Verify that clicking on the keypads module will redirect the user to the

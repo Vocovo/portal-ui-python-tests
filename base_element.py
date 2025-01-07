@@ -11,7 +11,8 @@ class BaseElement:
     def __init__(self, driver, locators):
         self.driver = driver
         self.locators = locators if isinstance(locators, list) else [locators]
-        self.web_element = self.find()
+        self.web_element = None
+        self.find()
 
     def find(self, retries=3, wait_time=2):
         """Finds the element with retry logic and supports fallback locators."""
@@ -19,7 +20,7 @@ class BaseElement:
             for locator in self.locators:
                 try:
                     self.web_element = WebDriverWait(self.driver, 30).until(
-                        EC.visibility_of_element_located(locator)
+                        EC.visibility_of_element_located((locator.by, locator.value))
                     )
                     return self.web_element  # If found, return the element
                 except TimeoutException:
@@ -54,7 +55,7 @@ class BaseElement:
     def click(self, retries=3, wait_time=2):
         while retries > 0:
             try:
-                element = WebDriverWait(self.driver, 30).until(EC.element_to_be_clickable(self.locators[0]))
+                element = WebDriverWait(self.driver, 30).until(EC.element_to_be_clickable((self.locators[0].by, self.locators[0].value)))
                 element.click()
                 return None
             except (StaleElementReferenceException, TimeoutException):
@@ -108,3 +109,17 @@ class BaseElement:
         """Returns the value of the specified attribute."""
         assert self.web_element
         return self.web_element.get_attribute(attribute_name)
+
+    def wait_for_value(self, threshold=0, timeout=10):
+        """
+        Wait for the value of the element to be greater than the given threshold.
+        """
+        end_time = time.time() + timeout
+        while time.time() < end_time:
+            try:
+                value = int(self.get_text)
+                if value > threshold:
+                    return value
+            except (ValueError, StaleElementReferenceException, TimeoutException):
+                pass
+            time.sleep(0.5)

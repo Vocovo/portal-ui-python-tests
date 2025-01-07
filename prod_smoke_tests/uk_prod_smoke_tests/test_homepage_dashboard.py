@@ -13,7 +13,6 @@ from conftest import qase_test
 @mark.portaluksmoketests
 @mark.regression
 @mark.testcaseid("CE-1960")
-@mark.workingon
 @qase_test(case_id=1960)  # Use the decorator for Qase integration
 def test_dashboard_active_devices(driver_uk_prod_login_admin, run_id):
     """
@@ -131,7 +130,6 @@ def test_dashboard_active_controllers(driver_uk_prod_login_admin, run_id):
 @mark.regression
 @mark.testcaseid("CE-1969")
 @qase_test(case_id=1969)  # Use the decorator for Qase integration
-@mark.workingon
 def test_dashboard_headsets(driver_uk_prod_login_admin, run_id):
     """
     Verify that the headsets module displays all necessary data
