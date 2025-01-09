@@ -2,6 +2,7 @@ from selenium.webdriver.common.by import By
 from locator import Locator
 from base_element import BaseElement
 
+
 class BasePage:
     def __init_subclass__(cls) -> None:
         for key, value in cls.__dict__.items():
