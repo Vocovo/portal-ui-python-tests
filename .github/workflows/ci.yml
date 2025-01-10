@@ -21,7 +21,7 @@ jobs:
       PROD_US_BASE_URL: https://portal.us.vocovo.com/
       USERNAME_FALSE: forgot_pass_user4082@vocovo.com
       ADMIN_USERNAME: qa-testing@vocovo.com
-      ADMIN_PASSWORD: vocovoT3st!ng@utomation
+      ADMIN_PASSWORD: vocovoT3st!ng@Utomation
       QASE_API_TOKEN: ae98bb7b27408a4c8c7be2651e35b061d55f719c00a7f31489e005073606961a
       QASE_PROJECT_CODE: CE
 
